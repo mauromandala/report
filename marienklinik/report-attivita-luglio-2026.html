@@ -1,0 +1,355 @@
+<title>Report attività SEO — Marienklinik</title>
+<style>
+  :root {
+    --bg: #091529;
+    --surface: #0d1e35;
+    --surface-2: #112544;
+    --ink: #ffffff;
+    --ink-soft: #c8d4e8;
+    --ink-faint: #8a9ab8;
+    --gold: #e6b253;
+    --gold-ink: #091529;
+    --rule: rgba(200,212,232,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(600px 420px at 88% -8%, rgba(230,178,83,0.08), transparent 65%),
+      radial-gradient(500px 400px at -10% 12%, rgba(200,212,232,0.05), transparent 60%);
+    color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 28px 96px;
+  }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .wordmark .dot { color: var(--gold); }
+  .wordmark .sub {
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .masthead .date {
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .kicker .line {
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .kicker span:last-child {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: clamp(28px, 4.2vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .subtitle {
+    font-size: 15.5px;
+    color: var(--ink-faint);
+    margin: 0 0 36px;
+    max-width: 58ch;
+  }
+
+  .intro {
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 60px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .intro strong { color: var(--ink); font-weight: 600; }
+  .num {
+    color: var(--gold);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  section.workstream {
+    margin-bottom: 56px;
+  }
+  section.workstream:last-of-type { margin-bottom: 0; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--ink);
+    margin: 0 0 14px;
+  }
+
+  .lede {
+    font-weight: 300;
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin: 0 0 24px;
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 22px;
+    background: var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 560px) {
+    .pair { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    padding: 20px 22px;
+  }
+  .card-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+    color: var(--gold);
+  }
+  .card.beneficio .card-label { color: var(--ink-faint); }
+  .card p {
+    margin: 0;
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .metric-row {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .metric {
+    font-variant-numeric: tabular-nums;
+  }
+  .metric .n {
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--gold);
+    display: block;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .metric .lbl {
+    font-size: 13px;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 56px 0;
+  }
+
+  .closing {
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 32px 34px;
+    margin-top: 8px;
+  }
+  .closing h2 { font-size: 21px; margin-bottom: 14px; }
+  .closing p {
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 14px;
+  }
+  .closing p:last-child { margin-bottom: 0; }
+  .closing .highlight {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .sign {
+    margin-top: 48px;
+    font-size: 14px;
+    color: var(--ink-faint);
+  }
+  .sign .name { color: var(--ink); font-weight: 600; }
+</style>
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="wordmark">MAURO MANDALARI<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+    <span class="date">17 luglio 2026</span>
+  </div>
+
+  <div class="kicker"><span class="line"></span><span>Report attività</span></div>
+  <h1>Cosa abbiamo fatto e perché</h1>
+  <p class="subtitle">Per Gabi, da Mauro Mandalari</p>
+
+  <p class="intro">Qui trovi il dettaglio di tutto il lavoro svolto finora sul sito. Ogni intervento è spiegato con il problema che risolveva e il beneficio che porta — non solo l'elenco tecnico. <strong>È un lavoro di fondazione</strong>: i numeri su traffico e posizionamento richiedono qualche settimana per manifestarsi in modo affidabile, e arriveranno nel report di inizio agosto.</p>
+
+  <section class="workstream">
+    <span class="eyebrow">Scoperta e struttura</span>
+    <h2>Come Google trova e legge le pagine del sito</h2>
+    <p class="lede">Abbiamo verificato che tutte le pagine fossero raggiungibili e correttamente segnalate a Google: corretto un problema che impediva la lettura della mappa del sito, creato oltre <span class="num">430</span> reindirizzamenti per collegare i vecchi indirizzi (rimasti dalla versione precedente del sito) alle pagine attuali corrispondenti, e richiesto manualmente a Google la scansione delle pagine più importanti.</p>
+    <div class="metric-row">
+      <div class="metric"><span class="n">430+</span><span class="lbl">reindirizzamenti creati</span></div>
+      <div class="metric"><span class="n">40</span><span class="lbl">pagine richieste in scansione manuale</span></div>
+    </div>
+    <div class="pair">
+      <div class="card perche">
+        <div class="card-label">Perché</div>
+        <p>Il sito ha cambiato struttura rispetto alla versione precedente. Chi arriva da un vecchio link — una ricerca salvata, un post condiviso, un risultato Google non aggiornato — trovava un errore, e Google interpretava quelle pagine come perse, disperdendo il valore che avevano accumulato nel tempo.</p>
+      </div>
+      <div class="card beneficio">
+        <div class="card-label">Beneficio atteso</div>
+        <p>Ogni vecchio collegamento porta ora a un contenuto reale invece che a un errore. Il valore accumulato dalle vecchie pagine passa alle pagine attuali, e Google può scansionare e indicizzare il sito in modo più completo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="workstream">
+    <span class="eyebrow">Precisione</span>
+    <h2>Correttezza delle informazioni mostrate su Google</h2>
+    <p class="lede">Abbiamo controllato una per una tutte le pagine dei reparti medici, verificando che titolo e descrizione mostrati nei risultati di ricerca corrispondessero davvero al contenuto. Trovate e corrette <span class="num">6</span> pagine dove per un errore di impostazione titolo e descrizione su Google appartenevano a un reparto diverso.</p>
+    <div class="pair">
+      <div class="card perche">
+        <div class="card-label">Perché</div>
+        <p>Un titolo o una descrizione sbagliati non sono un dettaglio estetico: confondono chi cerca un medico o un servizio specifico, e chi clicca aspettandosi una cosa e ne trova un'altra torna subito indietro — un segnale che Google legge negativamente.</p>
+      </div>
+      <div class="card beneficio">
+        <div class="card-label">Beneficio atteso</div>
+        <p>Chi cerca un reparto su Google trova subito un'anteprima corretta e pertinente, con più probabilità di clic e nessuna impressione di scarsa cura del sito.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="workstream">
+    <span class="eyebrow">Presentazione</span>
+    <h2>Come il sito appare quando viene condiviso</h2>
+    <p class="lede">Ottimizzate le anteprime social (Facebook, WhatsApp e simili) delle pagine principali — home, la clinica, la casa per anziani, i reparti più consultati, alcuni articoli — con titolo, immagine e descrizione dedicati invece di quelli generati automaticamente.</p>
+    <div class="pair">
+      <div class="card perche">
+        <div class="card-label">Perché</div>
+        <p>Un'anteprima generica o disordinata comunica meno professionalità e riduce la voglia di aprire il link condiviso.</p>
+      </div>
+      <div class="card beneficio">
+        <div class="card-label">Beneficio atteso</div>
+        <p>Ogni condivisione del sito — dallo staff, dai pazienti, da chiunque — si presenta in modo curato e coerente con l'immagine della clinica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="workstream">
+    <span class="eyebrow">Nuovi canali</span>
+    <h2>Segnali tecnici aggiuntivi</h2>
+    <p class="lede">Aggiunte descrizioni testuali a tutte le immagini del sito (utili sia per l'accessibilità sia per la ricerca per immagini), estesi i segnali di aggiornamento rapido a reparti e schede specialisti, e predisposto il sito per essere letto correttamente anche dai motori di ricerca basati su intelligenza artificiale — quelli integrati in strumenti come ChatGPT o Perplexity.</p>
+    <div class="pair">
+      <div class="card perche">
+        <div class="card-label">Perché</div>
+        <p>La ricerca online non passa più solo da Google: una quota crescente di persone chiede direttamente a un assistente AI "qual è un buon reparto di dermatologia a Bolzano", ed è importante che questi strumenti possano leggere e citare correttamente le informazioni del sito.</p>
+      </div>
+      <div class="card beneficio">
+        <div class="card-label">Beneficio atteso</div>
+        <p>Maggiore visibilità sia nella ricerca tradizionale sia nei nuovi canali di ricerca AI, oltre a una migliore accessibilità per chi naviga con strumenti assistivi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="workstream">
+    <span class="eyebrow">Misurazione</span>
+    <h2>Dati affidabili su traffico e visibilità</h2>
+    <p class="lede">Collegati al sito due strumenti ufficiali Google: <strong style="color:var(--ink)">Google Analytics 4</strong>, per misurare traffico e comportamento dei visitatori, e la <strong style="color:var(--ink)">Search Console</strong>, per monitorare come Google vede, scansiona e indicizza il sito nel tempo.</p>
+    <div class="pair">
+      <div class="card perche">
+        <div class="card-label">Perché</div>
+        <p>Senza dati affidabili è impossibile capire cosa funziona e cosa no, o dimostrare con numeri concreti l'effetto del lavoro svolto. I due strumenti si completano: uno guarda il sito dal lato di chi lo visita, l'altro dal lato di come Google lo interpreta.</p>
+      </div>
+      <div class="card beneficio">
+        <div class="card-label">Beneficio atteso</div>
+        <p>Da questo momento possiamo misurare con precisione l'andamento del sito — traffico, indicizzazione, ricerche che lo intercettano — e prendere decisioni basate su dati reali, non su impressioni.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <div class="closing">
+    <h2>E adesso?</h2>
+    <p>Tutto questo è lavoro di base — necessario prima che il posizionamento vero e proprio possa muoversi in modo solido e duraturo, un po' come sistemare le fondamenta prima di costruire.</p>
+    <p>Ti preparo il <span class="highlight">report con i numeri concreti su traffico e posizionamento a inizio agosto</span>, quando avremo dati sufficienti per un'analisi affidabile.</p>
+  </div>
+
+  <p class="sign">A presto,<br /><span class="name">Mauro Mandalari</span></p>
+
+</div>
