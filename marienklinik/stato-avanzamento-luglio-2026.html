@@ -1,0 +1,338 @@
+<title>Stato di avanzamento — Marienklinik</title>
+<style>
+  :root {
+    --bg: #091529;
+    --surface: #0d1e35;
+    --surface-2: #112544;
+    --ink: #ffffff;
+    --ink-soft: #c8d4e8;
+    --ink-faint: #8a9ab8;
+    --gold: #e6b253;
+    --gold-ink: #091529;
+    --rule: rgba(200,212,232,0.14);
+    --ok: #7fc99b;
+    --pending: #e6b253;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-size: 15px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .wordmark .dot { color: var(--gold); margin: 0 8px; }
+  .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+  .meta-date { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.02em; }
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+
+  h1.title { font-size: 34px; margin-bottom: 10px; }
+  .intro { font-size: 19px; color: var(--ink-soft); font-weight: 300; margin-bottom: 8px; }
+  .intro-note { font-size: 14px; color: var(--ink-faint); margin-bottom: 48px; }
+
+  .status-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+  .status-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px 18px;
+    box-shadow: var(--shadow);
+  }
+  .status-card .n {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .status-card .label {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  section.block { margin-bottom: 44px; }
+  section.block h2 { font-size: 21px; margin-bottom: 4px; }
+  .block-sub { font-size: 13.5px; color: var(--ink-faint); margin-bottom: 20px; }
+
+  .item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .item:last-child { border-bottom: none; }
+  .item .mark {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 2px;
+  }
+  .item .mark.done { background: rgba(127,201,155,0.16); color: var(--ok); }
+  .item .mark.pending { background: rgba(230,178,83,0.16); color: var(--pending); }
+
+  .item .body { flex: 1; }
+  .item .name { color: var(--ink); font-weight: 500; font-size: 15.5px; margin-bottom: 3px; }
+  .item .evidence { color: var(--ink-faint); font-size: 14px; }
+  .item .evidence .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .tag.recurring { background: var(--surface-2); color: var(--ink-faint); }
+
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 28px 0;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .callout strong { color: var(--ink); }
+
+  .closing {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  .closing p { font-size: 16px; margin-bottom: 14px; }
+
+  .sign {
+    margin-top: 40px;
+    font-size: 13.5px;
+    color: var(--ink-faint);
+  }
+  .sign .name { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 560px) {
+    .status-summary { grid-template-columns: 1fr; }
+    h1.title { font-size: 27px; }
+  }
+</style>
+
+<div class="masthead">
+  <div class="wordmark">Mauro Mandalari<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+  <div class="meta-date">27 luglio 2026</div>
+</div>
+
+<div class="kicker">Stato di avanzamento</div>
+<h1 class="title">Attività svolte rispetto al pacchetto acquistato</h1>
+<p class="intro">Report intermedio: verifica puntuale di ogni voce del pacchetto SEO Completo + Gestione Continua, confrontata con lo stato reale del sito.</p>
+<p class="intro-note">Ogni voce sotto è stata controllata direttamente sul sito live il giorno di stesura di questo report — non è un elenco di intenzioni, ma di cose verificate in produzione.</p>
+
+<div class="status-summary">
+  <div class="status-card">
+    <div class="n">14/14</div>
+    <div class="label">Voci una tantum consegnate</div>
+  </div>
+  <div class="status-card">
+    <div class="n">430</div>
+    <div class="label">Redirect attivi</div>
+  </div>
+  <div class="status-card">
+    <div class="n">54/54</div>
+    <div class="label">Reparti con SEO completa</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="kicker">01 — Migrazione e reindirizzamenti 301</div>
+  <p class="block-sub">Italiano e tedesco gestiti separatamente, con hreflang corretti tra le due versioni.</p>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Mappatura e redirect 301 completi</div>
+      <div class="evidence"><span class="num">430</span> reindirizzamenti attivi, categorizzati per lingua (DE/IT), verso la pagina più pertinente — non genericamente alla home.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Gestione varianti con parametri di tracciamento</div>
+      <div class="evidence">Le vecchie URL con parametri (fbclid, utm_*, cHash) vengono intercettate e reindirizzate correttamente, non solo la forma esatta.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Monitoraggio 404 ed eliminazione catene di redirect</div>
+      <div class="evidence">404 segnalati da Search Console verificati e corretti; nessuna catena di redirect residua sulle voci controllate.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Hreflang IT/DE</div>
+      <div class="evidence">Verificato direttamente nell'HTML: ogni pagina IT e la sua corrispondente DE si linkano reciprocamente in modo corretto.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">02 — SEO on-page</div>
+  <p class="block-sub">Su tutte le pagine del sito, non solo le principali, in entrambe le lingue.</p>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Titoli e meta description corretti su tutte le pagine</div>
+      <div class="evidence">Incluso un bug di partenza dove 6 pagine avevano titolo/descrizione di un altro reparto — corretto e verificato: zero duplicati residui su 215 contenuti controllati.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Anteprime social (Facebook/X) sui 54 reparti</div>
+      <div class="evidence"><span class="num">54/54</span> reparti con titolo social dedicato, scritto per far venire voglia di cliccare — non solo il titolo SEO riciclato.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Coerenza linguistica tedesca</div>
+      <div class="evidence">29 campi (titoli, descrizioni, anteprime social) con caratteri tedeschi scritti in forma traslitterata (es. "ue" al posto di "ü") corretti — il mercato tedesco è quello con il rendimento migliore del sito.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Controllo di indicizzazione</div>
+      <div class="evidence">Le pagine legali senza valore per un paziente (cookie, privacy, impressum) sono state escluse dall'indice; le pagine con obbligo di pubblicità legale sono rimaste visibili, come richiesto.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">03 — Dati strutturati e rich snippet</div>
+  <p class="block-sub">Ciò che Google può leggere per capire chi è la clinica, non solo cosa scrive.</p>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Schema per tipo di contenuto</div>
+      <div class="evidence">Reparti, specialisti e articoli hanno ciascuno lo schema più adatto disponibile su questa installazione.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Identità della clinica arricchita</div>
+      <div class="evidence">Logo, link ufficiali (Facebook e scheda Google Maps) e orari di apertura ora presenti nei dati strutturati della homepage e della pagina istituzionale.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">04 — Fondamenta tecniche SEO</div>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Sitemap XML e indicizzazione a livello di sito</div>
+      <div class="evidence">Attiva e aggiornata automaticamente ad ogni pubblicazione.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Notifica immediata a Google e Bing</div>
+      <div class="evidence">Ogni pubblicazione o modifica viene segnalata istantaneamente ai motori di ricerca, invece di aspettare la scansione naturale.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">05 — Monitoraggio e miglioramento continuo <span class="tag recurring">Ricorrente</span></div>
+  <p class="block-sub">La parte mensile del pacchetto — avviata, non ancora conclusa: qui il lavoro non finisce mai davvero.</p>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Collegamento Google Search Console</div>
+      <div class="evidence">Attivo insieme a Google Analytics 4, entrambi verificati funzionanti sul sito.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark pending">…</div>
+    <div class="body">
+      <div class="name">Prima rilevazione di riferimento</div>
+      <div class="evidence">Registrati i dati delle prime 4 settimane (29 giugno – 24 luglio) come punto di partenza. Il lavoro è uscito a scaglioni in questo stesso periodo: è ancora presto per leggere qualunque numero come un risultato, positivo o negativo. Si torna a guardarli con più storico a disposizione.</div>
+    </div>
+  </div>
+</section>
+
+<div class="callout">
+  <strong>Una nota sui numeri.</strong> In questo report non troverai grafici di posizionamento o di traffico. È una scelta: leggerli oggi, a poche settimane dai primi interventi, significherebbe leggere rumore statistico e presentarlo come un risultato. Il monitoraggio è attivo e i dati vengono raccolti — la lettura arriverà quando avrà un senso darla.
+</div>
+
+<div class="closing">
+  <p>Tutte le voci del pacchetto una tantum risultano consegnate e verificate in produzione. La parte di gestione continuativa è attiva e prosegue mese per mese, come da accordo.</p>
+</div>
+
+<div class="sign">
+  <div class="name">Mauro Mandalari</div>
+  <div>Consulenza SEO — Marienklinik Bozen</div>
+</div>
