@@ -22,10 +22,11 @@
     color: var(--ink-soft);
     font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 300;
-    line-height: 1.6;
-    max-width: 760px;
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 980px;
     margin: 0 auto;
-    padding: 64px 24px 96px;
+    padding: 72px 32px 110px;
   }
 
   h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
@@ -35,87 +36,95 @@
     justify-content: space-between;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 8px 24px;
-    padding-bottom: 28px;
-    margin-bottom: 40px;
+    gap: 10px 24px;
+    padding-bottom: 32px;
+    margin-bottom: 48px;
     border-bottom: 1px solid var(--rule);
   }
   .wordmark {
     font-weight: 800;
     letter-spacing: 0.08em;
-    font-size: 15px;
+    font-size: 19px;
     color: var(--ink);
     text-transform: uppercase;
   }
   .wordmark .dot { color: var(--gold); margin: 0 8px; }
   .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
-  .meta-date { color: var(--ink-faint); font-size: 13px; letter-spacing: 0.02em; }
+  .meta-date { color: var(--ink-faint); font-size: 16px; letter-spacing: 0.02em; }
 
   .kicker {
     display: flex;
     align-items: center;
     gap: 12px;
     color: var(--gold);
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
 
-  h1.title { font-size: 34px; margin-bottom: 10px; }
-  .intro { font-size: 19px; color: var(--ink-soft); font-weight: 300; margin-bottom: 8px; }
-  .intro-note { font-size: 14px; color: var(--ink-faint); margin-bottom: 48px; }
+  h1.title { font-size: 43px; margin-bottom: 14px; }
+  .intro { font-size: 24px; color: var(--ink-soft); font-weight: 300; margin-bottom: 12px; }
+  .intro-note { font-size: 17px; color: var(--ink-faint); margin-bottom: 56px; }
 
   .status-summary {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 56px;
+    gap: 16px;
+    margin-bottom: 64px;
   }
   .status-card {
     background: var(--surface);
     border: 1px solid var(--rule);
     border-radius: 6px;
-    padding: 20px 18px;
+    padding: 24px 22px;
     box-shadow: var(--shadow);
   }
   .status-card .n {
-    font-size: 30px;
+    font-size: 38px;
     font-weight: 800;
     color: var(--gold);
     font-variant-numeric: tabular-nums;
     line-height: 1;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .status-card .label {
-    font-size: 12.5px;
+    font-size: 15px;
     color: var(--ink-faint);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
 
-  section.block { margin-bottom: 44px; }
-  section.block h2 { font-size: 21px; margin-bottom: 4px; }
-  .block-sub { font-size: 13.5px; color: var(--ink-faint); margin-bottom: 20px; }
+  section.block { margin-bottom: 56px; }
+  .block-explainer {
+    font-size: 18px;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    border: 1px solid var(--rule);
+  }
+  .block-explainer strong { color: var(--ink); }
 
   .item {
     display: flex;
-    gap: 14px;
-    padding: 14px 0;
+    gap: 16px;
+    padding: 20px 0;
     border-bottom: 1px solid var(--rule);
   }
   .item:last-child { border-bottom: none; }
   .item .mark {
     flex-shrink: 0;
-    width: 22px;
-    height: 22px;
+    width: 27px;
+    height: 27px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 800;
     margin-top: 2px;
   }
@@ -123,19 +132,19 @@
   .item .mark.pending { background: rgba(230,178,83,0.16); color: var(--pending); }
 
   .item .body { flex: 1; }
-  .item .name { color: var(--ink); font-weight: 500; font-size: 15.5px; margin-bottom: 3px; }
-  .item .evidence { color: var(--ink-faint); font-size: 14px; }
+  .item .name { color: var(--ink); font-weight: 500; font-size: 19px; margin-bottom: 6px; }
+  .item .evidence { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .item .evidence .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
 
   .tag {
     display: inline-block;
-    font-size: 10.5px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 3px;
-    margin-left: 8px;
+    margin-left: 10px;
     vertical-align: middle;
   }
   .tag.recurring { background: var(--surface-2); color: var(--ink-faint); }
@@ -143,32 +152,33 @@
   .callout {
     background: var(--surface);
     border: 1px solid var(--rule);
-    border-left: 3px solid var(--gold);
+    border-left: 4px solid var(--gold);
     border-radius: 4px;
-    padding: 18px 22px;
-    margin: 28px 0;
-    font-size: 15px;
+    padding: 24px 28px;
+    margin: 36px 0;
+    font-size: 18px;
     color: var(--ink-soft);
   }
   .callout strong { color: var(--ink); }
 
   .closing {
-    margin-top: 56px;
-    padding-top: 32px;
+    margin-top: 64px;
+    padding-top: 40px;
     border-top: 1px solid var(--rule);
   }
-  .closing p { font-size: 16px; margin-bottom: 14px; }
+  .closing p { font-size: 20px; margin-bottom: 16px; }
 
   .sign {
-    margin-top: 40px;
-    font-size: 13.5px;
+    margin-top: 48px;
+    font-size: 17px;
     color: var(--ink-faint);
   }
   .sign .name { color: var(--ink); font-weight: 600; }
 
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     .status-summary { grid-template-columns: 1fr; }
-    h1.title { font-size: 27px; }
+    h1.title { font-size: 32px; }
+    .intro { font-size: 20px; }
   }
 </style>
 
@@ -178,18 +188,18 @@
 </div>
 
 <div class="kicker">Stato di avanzamento</div>
-<h1 class="title">Attività svolte rispetto al pacchetto acquistato</h1>
-<p class="intro">Report intermedio: verifica puntuale di ogni voce del pacchetto SEO Completo + Gestione Continua, confrontata con lo stato reale del sito.</p>
-<p class="intro-note">Ogni voce sotto è stata controllata direttamente sul sito live il giorno di stesura di questo report — non è un elenco di intenzioni, ma di cose verificate in produzione.</p>
+<h1 class="title">Cosa abbiamo fatto sul sito, e perché</h1>
+<p class="intro">Report intermedio: un controllo pagina per pagina di tutto ciò che era previsto dal pacchetto acquistato, confrontato con lo stato reale del sito oggi.</p>
+<p class="intro-note">Questo documento è scritto per essere chiaro anche senza background tecnico: ogni voce spiega prima cosa significa in parole semplici, poi cosa è stato fatto concretamente e perché conta per la clinica. Ogni riga è stata controllata direttamente sul sito online il giorno della stesura — non è un elenco di intenzioni, ma di cose verificate in produzione.</p>
 
 <div class="status-summary">
   <div class="status-card">
     <div class="n">14/14</div>
-    <div class="label">Voci una tantum consegnate</div>
+    <div class="label">Voci del pacchetto consegnate</div>
   </div>
   <div class="status-card">
     <div class="n">430</div>
-    <div class="label">Redirect attivi</div>
+    <div class="label">Vecchi indirizzi reindirizzati</div>
   </div>
   <div class="status-card">
     <div class="n">54/54</div>
@@ -198,138 +208,139 @@
 </div>
 
 <section class="block">
-  <div class="kicker">01 — Migrazione e reindirizzamenti 301</div>
-  <p class="block-sub">Italiano e tedesco gestiti separatamente, con hreflang corretti tra le due versioni.</p>
+  <div class="kicker">01 — Reindirizzamenti (redirect)</div>
+  <p class="block-explainer">Quando un sito cambia struttura, i vecchi indirizzi che i pazienti hanno salvato nei preferiti, o che Google conosce da anni, smettono di funzionare da un giorno all'altro. Un <strong>redirect</strong> è come un cartello automatico: dice "questa pagina non esiste più, seguimi qui" — così chi arriva da un vecchio link trova comunque la pagina giusta, invece di un errore, e Google continua a riconoscere il valore accumulato negli anni su quell'indirizzo.</p>
 
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Mappatura e redirect 301 completi</div>
-      <div class="evidence"><span class="num">430</span> reindirizzamenti attivi, categorizzati per lingua (DE/IT), verso la pagina più pertinente — non genericamente alla home.</div>
+      <div class="name">430 vecchi indirizzi reindirizzati alla pagina giusta</div>
+      <div class="evidence">Abbiamo creato <span class="num">430</span> di questi "cartelli automatici", uno per ogni vecchio indirizzo del sito precedente, sia in italiano che in tedesco. Ognuno porta alla pagina più simile e utile di oggi — mai genericamente alla homepage, che lascerebbe comunque confuso chi cerca qualcosa di preciso.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Gestione varianti con parametri di tracciamento</div>
-      <div class="evidence">Le vecchie URL con parametri (fbclid, utm_*, cHash) vengono intercettate e reindirizzate correttamente, non solo la forma esatta.</div>
+      <div class="name">Funziona anche con i link condivisi sui social</div>
+      <div class="evidence">Molti vecchi link, quando venivano condivisi su Facebook o via email, portavano codici extra in coda all'indirizzo (usati per tracciare da dove arrivava il click). Abbiamo verificato che anche queste varianti vengano riconosciute e reindirizzate correttamente, non solo la forma "pulita" del link.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Monitoraggio 404 ed eliminazione catene di redirect</div>
-      <div class="evidence">404 segnalati da Search Console verificati e corretti; nessuna catena di redirect residua sulle voci controllate.</div>
+      <div class="name">Nessun link rotto residuo</div>
+      <div class="evidence">Un "errore 404" è ciò che vede chi clicca un link che non porta più da nessuna parte — un'esperienza negativa sia per un visitatore che per Google. Abbiamo controllato uno per uno quelli segnalati da Google e li abbiamo corretti; verificato inoltre che nessun redirect rimandi a sua volta a un altro redirect, cosa che rallenterebbe il caricamento della pagina.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Hreflang IT/DE</div>
-      <div class="evidence">Verificato direttamente nell'HTML: ogni pagina IT e la sua corrispondente DE si linkano reciprocamente in modo corretto.</div>
+      <div class="name">Le versioni italiana e tedesca sono collegate correttamente</div>
+      <div class="evidence">C'è un'indicazione tecnica che dice a Google "questa pagina in tedesco e questa in italiano parlano della stessa cosa" — così mostra automaticamente la lingua giusta a chi cerca. Abbiamo verificato, direttamente nel codice della pagina, che questo collegamento sia corretto su tutte le coppie di pagine controllate.</div>
     </div>
   </div>
 </section>
 
 <section class="block">
-  <div class="kicker">02 — SEO on-page</div>
-  <p class="block-sub">Su tutte le pagine del sito, non solo le principali, in entrambe le lingue.</p>
+  <div class="kicker">02 — Titoli e descrizioni su Google (SEO on-page)</div>
+  <p class="block-explainer">Il titolo blu e la breve descrizione grigia che vedi sotto ogni risultato quando cerchi qualcosa su Google non sono automatici: vanno scritti pagina per pagina, in modo chiaro e capace di invogliare al clic. È il primo contatto — spesso l'unico che conta — tra un potenziale paziente e la clinica, prima ancora che apra il sito.</p>
 
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Titoli e meta description corretti su tutte le pagine</div>
-      <div class="evidence">Incluso un bug di partenza dove 6 pagine avevano titolo/descrizione di un altro reparto — corretto e verificato: zero duplicati residui su 215 contenuti controllati.</div>
+      <div class="name">Titolo e descrizione riscritti su tutte le pagine, in entrambe le lingue</div>
+      <div class="evidence">Durante il controllo abbiamo anche scoperto un errore di origine: <span class="num">6</span> pagine mostravano per sbaglio il titolo di un reparto diverso da quello a cui appartenevano (un copia-incolla andato storto nella creazione del sito). Corretto, e poi verificato che l'errore non si ripetesse su nessuna delle <span class="num">215</span> pagine del sito.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Anteprime social (Facebook/X) sui 54 reparti</div>
-      <div class="evidence"><span class="num">54/54</span> reparti con titolo social dedicato, scritto per far venire voglia di cliccare — non solo il titolo SEO riciclato.</div>
+      <div class="name">Anteprime scritte apposta per Facebook e X su tutti i 54 reparti</div>
+      <div class="evidence">Quando un link viene condiviso sui social, il testo e l'immagine che appaiono si chiamano "anteprima" — se non viene scritta a mano, il sito usa il titolo tecnico da Google, spesso troppo asciutto per convincere qualcuno a cliccare. Abbiamo scritto un'anteprima pensata per chi legge, dedicata, su tutti i <span class="num">54</span> reparti del sito.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Coerenza linguistica tedesca</div>
-      <div class="evidence">29 campi (titoli, descrizioni, anteprime social) con caratteri tedeschi scritti in forma traslitterata (es. "ue" al posto di "ü") corretti — il mercato tedesco è quello con il rendimento migliore del sito.</div>
+      <div class="name">Corretti 29 errori nei testi tedeschi visibili su Google</div>
+      <div class="evidence">Il tedesco usa caratteri speciali (le "umlaut": ü, ä, ö) che, se scritti nel modo sbagliato (per esempio "ue" al posto di "ü"), fanno sembrare il testo scritto da un sistema automatico invece che da un madrelingua. Abbiamo trovato e corretto <span class="num">29</span> di questi errori nei testi che compaiono direttamente su Google — un dettaglio che conta perché il pubblico di lingua tedesca è quello che risponde meglio al sito.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Controllo di indicizzazione</div>
-      <div class="evidence">Le pagine legali senza valore per un paziente (cookie, privacy, impressum) sono state escluse dall'indice; le pagine con obbligo di pubblicità legale sono rimaste visibili, come richiesto.</div>
+      <div class="name">Le pagine inutili per un paziente sono state tolte dai risultati di ricerca</div>
+      <div class="evidence">Pagine come cookie, privacy o note legali non interessano a chi cerca una clinica — e la loro presenza tra i risultati di Google "diluisce" l'attenzione sulle pagine che contano davvero (i reparti, gli specialisti, i servizi). Le abbiamo escluse dai risultati di ricerca, tranne quelle che la clinica deve tenere pubbliche per obbligo di legge, come i bilanci.</div>
     </div>
   </div>
 </section>
 
 <section class="block">
-  <div class="kicker">03 — Dati strutturati e rich snippet</div>
-  <p class="block-sub">Ciò che Google può leggere per capire chi è la clinica, non solo cosa scrive.</p>
+  <div class="kicker">03 — Le informazioni "invisibili" per Google (dati strutturati)</div>
+  <p class="block-explainer">Oltre al testo che leggono le persone, ogni pagina può contenere un livello di informazioni che serve solo ai motori di ricerca, per far capire loro con certezza chi è la clinica, cosa fa, dove si trova e quando è aperta. Si chiamano <strong>dati strutturati</strong>: più sono completi, più Google può mostrare informazioni ricche — come orario e indirizzo — direttamente nei risultati di ricerca, ancora prima che l'utente apra il sito.</p>
 
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Schema per tipo di contenuto</div>
-      <div class="evidence">Reparti, specialisti e articoli hanno ciascuno lo schema più adatto disponibile su questa installazione.</div>
+      <div class="name">Ogni tipo di pagina ha l'etichetta corretta</div>
+      <div class="evidence">Un reparto, uno specialista e un articolo hanno ciascuno un'"etichetta" diversa che descrive di che tipo di contenuto si tratta — così Google non li tratta tutti allo stesso modo, ma capisce la differenza tra un servizio medico, la scheda di un dottore e un articolo informativo.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Identità della clinica arricchita</div>
-      <div class="evidence">Logo, link ufficiali (Facebook e scheda Google Maps) e orari di apertura ora presenti nei dati strutturati della homepage e della pagina istituzionale.</div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="kicker">04 — Fondamenta tecniche SEO</div>
-
-  <div class="item">
-    <div class="mark done">✓</div>
-    <div class="body">
-      <div class="name">Sitemap XML e indicizzazione a livello di sito</div>
-      <div class="evidence">Attiva e aggiornata automaticamente ad ogni pubblicazione.</div>
-    </div>
-  </div>
-  <div class="item">
-    <div class="mark done">✓</div>
-    <div class="body">
-      <div class="name">Notifica immediata a Google e Bing</div>
-      <div class="evidence">Ogni pubblicazione o modifica viene segnalata istantaneamente ai motori di ricerca, invece di aspettare la scansione naturale.</div>
+      <div class="name">La scheda della clinica è più completa</div>
+      <div class="evidence">Abbiamo aggiunto il logo ufficiale, i link ai canali verificati (Facebook e la scheda su Google Maps) e gli orari di apertura corretti (7:00–18:00, dal lunedì al venerdì) a questo livello di informazioni — dati che Google può usare per arricchire la presenza della clinica nei risultati di ricerca.</div>
     </div>
   </div>
 </section>
 
 <section class="block">
-  <div class="kicker">05 — Monitoraggio e miglioramento continuo <span class="tag recurring">Ricorrente</span></div>
-  <p class="block-sub">La parte mensile del pacchetto — avviata, non ancora conclusa: qui il lavoro non finisce mai davvero.</p>
+  <div class="kicker">04 — Le fondamenta tecniche</div>
+  <p class="block-explainer">Sono gli strumenti di base che permettono a Google e Bing di trovare e scansionare correttamente tutte le pagine del sito, e di sapere il prima possibile quando qualcosa cambia — invece di scoprirlo per caso, magari con settimane di ritardo.</p>
 
   <div class="item">
     <div class="mark done">✓</div>
     <div class="body">
-      <div class="name">Collegamento Google Search Console</div>
-      <div class="evidence">Attivo insieme a Google Analytics 4, entrambi verificati funzionanti sul sito.</div>
+      <div class="name">Un elenco ufficiale di tutte le pagine, sempre aggiornato</div>
+      <div class="evidence">La "sitemap" è un elenco che diamo direttamente a Google con tutte le pagine del sito, così non deve scoprirle da solo nel tempo. Si aggiorna automaticamente ogni volta che viene pubblicato qualcosa di nuovo, senza bisogno di intervento manuale.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Google e Bing vengono avvisati all'istante</div>
+      <div class="evidence">Normalmente i motori di ricerca ripassano sul sito secondo i loro tempi, che possono richiedere giorni. Abbiamo attivato una notifica automatica che avvisa Google e Bing nel momento stesso in cui una pagina viene creata o modificata, per farla comparire nei risultati il prima possibile.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">05 — Monitoraggio continuo <span class="tag recurring">Attività mensile</span></div>
+  <p class="block-explainer">Questa è la parte del servizio che non si "consegna" una volta sola, ma prosegue ogni mese: tenere sotto controllo come si comporta il sito nel tempo, ed intervenire quando serve.</p>
+
+  <div class="item">
+    <div class="mark done">✓</div>
+    <div class="body">
+      <div class="name">Gli strumenti di misurazione di Google sono collegati e attivi</div>
+      <div class="evidence"><strong>Google Search Console</strong> mostra come il sito si comporta nelle ricerche: quante volte compare, quante volte viene cliccato, in che posizione. <strong>Google Analytics 4</strong> mostra invece cosa fanno le persone una volta arrivate sul sito. Entrambi sono collegati e verificati funzionanti.</div>
     </div>
   </div>
   <div class="item">
     <div class="mark pending">…</div>
     <div class="body">
-      <div class="name">Prima rilevazione di riferimento</div>
-      <div class="evidence">Registrati i dati delle prime 4 settimane (29 giugno – 24 luglio) come punto di partenza. Il lavoro è uscito a scaglioni in questo stesso periodo: è ancora presto per leggere qualunque numero come un risultato, positivo o negativo. Si torna a guardarli con più storico a disposizione.</div>
+      <div class="name">Registrato il punto di partenza per i confronti futuri</div>
+      <div class="evidence">Abbiamo salvato i numeri delle prime quattro settimane (29 giugno – 24 luglio) come riferimento. È importante essere onesti su questo: i vari interventi sono usciti gradualmente proprio in queste stesse settimane, quindi qualunque numero letto oggi darebbe un'idea sbagliata, in un senso o nell'altro. Aspettiamo di avere più storico a disposizione per un confronto che abbia davvero senso.</div>
     </div>
   </div>
 </section>
 
 <div class="callout">
-  <strong>Una nota sui numeri.</strong> In questo report non troverai grafici di posizionamento o di traffico. È una scelta: leggerli oggi, a poche settimane dai primi interventi, significherebbe leggere rumore statistico e presentarlo come un risultato. Il monitoraggio è attivo e i dati vengono raccolti — la lettura arriverà quando avrà un senso darla.
+  <strong>Perché in questo report non ci sono grafici di posizionamento o di traffico.</strong> Non è una dimenticanza, è una scelta: leggerli oggi, a poche settimane dai primi interventi e con i lavori ancora in corso a scaglioni, significherebbe scambiare normali oscillazioni per un risultato — vero o falso che sia. Il monitoraggio è attivo e i dati vengono raccolti fin da ora: la lettura arriverà quando ci sarà abbastanza storico per essere affidabile, non prima.
 </div>
 
 <div class="closing">
-  <p>Tutte le voci del pacchetto una tantum risultano consegnate e verificate in produzione. La parte di gestione continuativa è attiva e prosegue mese per mese, come da accordo.</p>
+  <p>In sintesi: tutte le <strong>14</strong> attività previste dalla parte "una tantum" del pacchetto risultano consegnate e verificate direttamente sul sito online. La parte di gestione continuativa è attiva e prosegue mese per mese, come da accordo.</p>
 </div>
 
 <div class="sign">
