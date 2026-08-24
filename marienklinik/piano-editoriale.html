@@ -1,0 +1,304 @@
+<title>Piano editoriale — Marienklinik</title>
+<style>
+  :root {
+    --bg: #091529; --surface: #0d1e35; --surface-2: #112544;
+    --ink: #ffffff; --ink-soft: #c8d4e8; --ink-faint: #8a9ab8;
+    --gold: #e6b253; --rule: rgba(200,212,232,0.14);
+    --ok: #7fc99b; --no: #e08a7a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300; font-size: 17px; line-height: 1.65;
+    max-width: 980px; margin: 0 auto; padding: 72px 32px 110px;
+  }
+  h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  .masthead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 10px 24px; padding-bottom: 32px; margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark { font-weight: 800; letter-spacing: 0.08em; font-size: 19px; color: var(--ink); text-transform: uppercase; }
+  .wordmark .dot { color: var(--gold); margin: 0 8px; }
+  .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+  .meta-date { color: var(--ink-faint); font-size: 16px; }
+  .kicker {
+    display: flex; align-items: center; gap: 12px; color: var(--gold);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.13em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  h1.title { font-size: 42px; margin-bottom: 14px; }
+  .intro { font-size: 22px; color: var(--ink-soft); margin-bottom: 20px; }
+  .scope-note {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold); border-radius: 4px;
+    padding: 22px 26px; margin-bottom: 52px; font-size: 17px;
+  }
+  .scope-note strong { color: var(--ink); }
+
+  section.block { margin-bottom: 58px; }
+  .block-explainer {
+    font-size: 18px; color: var(--ink-soft); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px;
+  }
+  .block-explainer strong { color: var(--ink); }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); margin: 22px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th { text-align: left; color: var(--ink-faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); }
+  td.n { font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.si { color: var(--ok); font-weight: 500; }
+  td.no { color: var(--no); }
+  .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .step { display: flex; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .step:last-child { border-bottom: none; }
+  .step .n {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--surface-2); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; font-variant-numeric: tabular-nums;
+  }
+  .step .body { flex: 1; }
+  .step .name { color: var(--ink); font-weight: 500; font-size: 19px; margin-bottom: 4px; }
+  .step .who { color: var(--gold); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .step .evidence { font-size: 17px; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold); border-radius: 4px;
+    padding: 24px 28px; margin: 32px 0; font-size: 18px;
+  }
+  .callout strong { color: var(--ink); }
+
+  .tiers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 26px 0 8px; }
+  .tier {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 28px 26px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  .tier.reco { border: 2px solid var(--gold); }
+  .tier .badge {
+    display: inline-block; align-self: flex-start;
+    background: var(--gold); color: #091529;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 3px; margin-bottom: 14px;
+  }
+  .tier h3 { font-size: 22px; margin-bottom: 6px; }
+  .tier .vol { color: var(--ink-faint); font-size: 16px; margin-bottom: 20px; }
+  .tier .price {
+    font-size: 40px; font-weight: 800; color: var(--gold);
+    font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 4px;
+  }
+  .tier .price small { font-size: 17px; font-weight: 300; color: var(--ink-faint); }
+  .tier .unit { color: var(--ink-faint); font-size: 15px; margin-bottom: 20px; }
+  .tier ul { list-style: none; padding: 0; margin: 0; font-size: 16px; }
+  .tier li { padding: 7px 0 7px 24px; position: relative; }
+  .tier li::before { content: "·"; position: absolute; left: 8px; color: var(--gold); font-weight: 800; font-size: 20px; line-height: 1.2; }
+
+  .closing { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--rule); }
+  .closing p { font-size: 19px; margin-bottom: 16px; }
+  .sign { margin-top: 48px; font-size: 17px; color: var(--ink-faint); }
+  .sign .name { color: var(--ink); font-weight: 600; }
+  @media (max-width: 640px) {
+    h1.title { font-size: 30px; } .intro { font-size: 20px; }
+    .tiers { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="masthead">
+  <div class="wordmark">Mauro Mandalari<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+  <div class="meta-date">Proposta — settembre 2026</div>
+</div>
+
+<div class="kicker">Proposta di ampliamento</div>
+<h1 class="title">Piano editoriale per la crescita</h1>
+<p class="intro">Il lavoro tecnico ha protetto e consolidato ciò che esisteva. Per crescere serve dare a Google contenuti che oggi non ci sono — ma non i contenuti che si scrivono di solito.</p>
+
+<div class="scope-note">
+  <strong>Cosa cambia rispetto a oggi.</strong> Il servizio attualmente attivo interviene su quello che è già pubblicato: titoli, struttura, collegamenti, correzioni. Non comprende la scrittura di contenuti nuovi. Questa proposta riguarda esclusivamente quella parte.
+</div>
+
+<section class="block">
+  <div class="kicker">01 — Perché un piano editoriale generico fallirebbe</div>
+  <p class="block-explainer">Il modello standard dei contenuti per una clinica sono gli articoli sui sintomi: <em>"Mal di schiena: cause e quando rivolgersi allo specialista"</em>. <strong>Sui dati reali di Marienklinik questo modello non regge</strong>, e vale la pena dirlo prima di proporre qualcosa.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tipo di ricerca</th><th class="n">Ricerche in 90 giorni</th><th>Vale la pena?</th></tr>
+      <tr><td>Sintomi ("dolore a…", "bruciore…")</td><td class="n">246</td><td class="no">No — volume troppo basso</td></tr>
+      <tr><td>Prevenzione e screening</td><td class="n">178</td><td class="no">No — volume troppo basso</td></tr>
+      <tr><td>Preparazione agli esami</td><td class="n">31</td><td class="no">No</td></tr>
+      <tr><td><strong style="color:var(--ink)">Certificati e patente</strong></td><td class="n">2.120</td><td class="si">Sì — e non esiste nulla sul sito</td></tr>
+      <tr><td><strong style="color:var(--ink)">Interventi e procedure</strong></td><td class="n">4.271</td><td class="si">Sì — posizione debole (10,2)</td></tr>
+      <tr><td><strong style="color:var(--ink)">Costi e listini</strong></td><td class="n">1.191</td><td class="si">Sì — alta propensione a contattare</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size:17px;">A Bolzano chi ha un sintomo non cerca un articolo: cerca direttamente un medico. Chi invece deve <strong style="color: var(--ink)">rinnovare la patente, capire quanto costa una risonanza o sapere come funziona un intervento</strong> cerca informazioni — e non le trova sul sito della clinica.</p>
+</section>
+
+<section class="block">
+  <div class="kicker">02 — L'occasione più evidente</div>
+
+  <div class="callout">
+    <strong>Rinnovo patente / Führerschein verlängern: 2.120 ricerche a trimestre, zero pagine sul sito.</strong><br><br>
+    Le persone cercano dove farlo, quanto costa, quali documenti servono, se serve il medico legale. La Marienklinik questo servizio lo eroga, ma su Google non lo dice da nessuna parte: oggi risponde qualche pagina generica, in nona posizione.<br><br>
+    È una visita breve, con alta probabilità di prenotazione immediata. <strong>Ed è cercata più in tedesco che in italiano</strong> — il mercato più forte della clinica.
+  </div>
+
+  <p style="font-size:17px;">Le stesse persone cercano anche <em>"Führerschein verlängern Südtirol Kosten"</em>, <em>"ärztliches Zeugnis Führerschein"</em>, <em>"visita medica patente Bolzano"</em>, <em>"amtsarzt Führerschein"</em>: una famiglia di domande pratiche a cui una sola pagina ben fatta può rispondere.</p>
+</section>
+
+<section class="block">
+  <div class="kicker">03 — Cosa proporrei di pubblicare</div>
+  <p class="block-explainer">Tre famiglie di contenuti, tutte scelte perché <strong>hanno domanda misurata</strong> sul sito della clinica, non perché funzionano in generale.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Famiglia</th><th>Esempi</th><th>A cosa serve</th></tr>
+      <tr>
+        <td><strong style="color:var(--ink)">Servizi pratici</strong></td>
+        <td>Rinnovo patente · Certificati medico-sportivi · Certificati di idoneità</td>
+        <td>Prenotazione quasi immediata: chi cerca deve fare quella pratica adesso</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--ink)">Come funziona un intervento</strong></td>
+        <td>Cataratta · Chirurgia della mano · Varici · Colonscopia</td>
+        <td>Riduce l'ansia di chi deve decidere e posiziona la clinica come competente</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--ink)">Trasparenza su tempi e costi</strong></td>
+        <td>Come funziona una visita privata · Tempi di attesa · Cosa comprende il costo</td>
+        <td>È già la ricerca con più clic in assoluto: le persone vogliono saperlo prima di chiamare</td>
+      </tr>
+    </table>
+  </div>
+
+  <p style="font-size:17px;"><strong style="color: var(--ink)">Ritmo proposto: 2 contenuti al mese</strong>, ciascuno pubblicato in italiano e tedesco. Sono 4 pagine pubblicate ogni mese, 24 contenuti in un anno. Ogni contenuto viene collegato al reparto e agli specialisti corrispondenti, sfruttando la rete di collegamenti interni già costruita.</p>
+</section>
+
+<section class="block">
+  <div class="kicker">04 — Come lavoreremmo, in concreto</div>
+  <p class="block-explainer">Il vincolo da rispettare è che <strong>si parla di medicina</strong>: nessun contenuto può essere pubblicato senza la validazione di chi ha la competenza clinica. Il processo è costruito per <strong>ridurre al minimo il tempo richiesto ai vostri specialisti</strong>: leggono e correggono, non scrivono.</p>
+
+  <div class="step">
+    <div class="n">1</div>
+    <div class="body">
+      <div class="who">Io</div>
+      <div class="name">Proposta dei temi del mese</div>
+      <div class="evidence">Scelti dai dati di ricerca reali del sito, non da elenchi generici. Vi arriva una lista breve con il motivo di ciascuno.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">2</div>
+    <div class="body">
+      <div class="who">Marienklinik</div>
+      <div class="name">Approvazione dei temi</div>
+      <div class="evidence">Decidete voi cosa ha senso trattare e cosa no, in base a ciò che la clinica vuole comunicare. Bastano pochi minuti.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">3</div>
+    <div class="body">
+      <div class="who">Io</div>
+      <div class="name">Scrittura del testo</div>
+      <div class="evidence">Redatto in una lingua, impostato per rispondere esattamente alle domande che le persone digitano su Google.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">4</div>
+    <div class="body">
+      <div class="who">Marienklinik</div>
+      <div class="name">Validazione clinica</div>
+      <div class="evidence">Lo specialista del reparto verifica la correttezza medica e segnala cosa cambiare. Non deve scrivere né riformulare: solo confermare o correggere.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">5</div>
+    <div class="body">
+      <div class="who">Io</div>
+      <div class="name">Versione nella seconda lingua</div>
+      <div class="evidence">Il sito dispone già di un sistema di traduzione assistita. La traduzione viene sempre riletta e corretta a mano prima della pubblicazione, mai pubblicata così com'è — la terminologia medica richiede controllo.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">6</div>
+    <div class="body">
+      <div class="who">Io</div>
+      <div class="name">Pubblicazione e collegamenti</div>
+      <div class="evidence">Titoli ottimizzati, dati strutturati, collegamenti al reparto e agli specialisti, segnalazione immediata ai motori di ricerca.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">7</div>
+    <div class="body">
+      <div class="who">Io</div>
+      <div class="name">Misurazione</div>
+      <div class="evidence">Ogni contenuto punta a ricerche precise e verificabili: nel report mensile si vede se stanno funzionando, contenuto per contenuto.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">05 — Cosa aspettarsi, onestamente</div>
+  <p style="font-size:17px;">Un contenuto nuovo impiega <strong style="color: var(--ink)">dai due ai quattro mesi</strong> per esprimere il proprio potenziale su Google. Le prime valutazioni serie arrivano dopo il terzo o quarto contenuto pubblicato, non dopo il primo.</p>
+  <p style="font-size:17px;">Le pagine sui servizi pratici (patente, certificati) dovrebbero muoversi prima delle altre, perché rispondono a una domanda precisa e poco presidiata dai concorrenti. Quelle sugli interventi richiedono più tempo, ma restano utili per anni.</p>
+  <p style="font-size:17px;">Non prometto posizioni né numeri di contatti: dipendono anche da fattori fuori dal sito. Prometto contenuti scelti su dati reali, misurati uno per uno, e la possibilità di fermarsi in qualsiasi momento se non stanno producendo effetti.</p>
+</section>
+
+<section class="block">
+  <div class="kicker">06 — Investimento</div>
+  <p class="block-explainer">Due livelli, in base a quanto si vuole accelerare. In entrambi i casi ogni contenuto è <strong>pubblicato in italiano e tedesco</strong>, con revisione clinica, ottimizzazione, collegamenti interni e misurazione dedicata.</p>
+
+  <div class="tiers">
+    <div class="tier">
+      <h3>Essenziale</h3>
+      <div class="vol">1 contenuto al mese</div>
+      <div class="price">300 <small>€ / mese</small></div>
+      <div class="unit">300 € a contenuto bilingue</div>
+      <ul>
+        <li>2 pagine pubblicate al mese (IT + DE)</li>
+        <li>Temi scelti sui dati di ricerca del sito</li>
+        <li>Revisione clinica inclusa nel processo</li>
+        <li>Collegamento a reparti e specialisti</li>
+        <li>Misurazione nel report mensile</li>
+      </ul>
+    </div>
+    <div class="tier reco">
+      <div class="badge">Consigliato</div>
+      <h3>Continuativo</h3>
+      <div class="vol">2 contenuti al mese</div>
+      <div class="price">500 <small>€ / mese</small></div>
+      <div class="unit">250 € a contenuto bilingue</div>
+      <ul>
+        <li>4 pagine pubblicate al mese (IT + DE)</li>
+        <li>Tutto quello del livello Essenziale</li>
+        <li>Copertura più rapida dei temi con domanda</li>
+        <li>Risultati leggibili in circa metà tempo</li>
+        <li>Costo unitario inferiore del 17%</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Impegno minimo: 3 mesi.</strong> Non è un vincolo commerciale, è il tempo tecnico perché la cosa abbia senso: un contenuto impiega dai due ai quattro mesi per esprimersi su Google. Con una durata inferiore si pagherebbe un lavoro senza poterne vedere l'esito.<br><br>
+    Va detto con chiarezza: <strong>la valutazione onesta arriva dopo 4-6 contenuti pubblicati</strong>. Con il livello Continuativo è il terzo mese, con l'Essenziale il quinto o sesto. Dopo i primi tre mesi si può interrompere in qualsiasi momento.
+  </div>
+
+  <p style="font-size:17px;">L'importo si aggiunge al canone di manutenzione già attivo, che resta invariato e copre attività diverse: monitoraggio, correzioni e ottimizzazione di ciò che è già pubblicato.</p>
+</section>
+
+<div class="closing">
+  <p>Il primo contenuto che pubblicherei è quello sul rinnovo della patente: è l'unico caso in cui c'è domanda misurata, il servizio è già erogato dalla clinica, e sul sito non esiste nulla.</p>
+</div>
+
+<div class="sign">
+  <div class="name">Mauro Mandalari</div>
+  <div>Consulenza SEO — Marienklinik Bozen</div>
+</div>
