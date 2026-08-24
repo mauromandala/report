@@ -1,0 +1,193 @@
+<title>Report mensile — Agosto</title>
+<style>
+  :root {
+    --bg: #091529; --surface: #0d1e35; --surface-2: #112544;
+    --ink: #ffffff; --ink-soft: #c8d4e8; --ink-faint: #8a9ab8;
+    --gold: #e6b253; --rule: rgba(200,212,232,0.14);
+    --ok: #7fc99b; --warn: #e6b253;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300; font-size: 17px; line-height: 1.65;
+    max-width: 980px; margin: 0 auto; padding: 72px 32px 110px;
+  }
+  h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  .masthead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 10px 24px; padding-bottom: 32px; margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark { font-weight: 800; letter-spacing: 0.08em; font-size: 19px; color: var(--ink); text-transform: uppercase; }
+  .wordmark .dot { color: var(--gold); margin: 0 8px; }
+  .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+  .meta-date { color: var(--ink-faint); font-size: 16px; }
+  .kicker {
+    display: flex; align-items: center; gap: 12px; color: var(--gold);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.13em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  h1.title { font-size: 42px; margin-bottom: 14px; }
+  .intro { font-size: 22px; color: var(--ink-soft); margin-bottom: 52px; }
+
+  section.block { margin-bottom: 56px; }
+  .block-explainer {
+    font-size: 18px; color: var(--ink-soft); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px;
+  }
+  .block-explainer strong { color: var(--ink); }
+
+  .item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-child { border-bottom: none; }
+  .item .mark {
+    flex-shrink: 0; width: 27px; height: 27px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; margin-top: 2px;
+    background: rgba(127,201,155,0.16); color: var(--ok);
+  }
+  .item .mark.find { background: rgba(230,178,83,0.16); color: var(--warn); }
+  .item .body { flex: 1; }
+  .item .name { color: var(--ink); font-weight: 500; font-size: 19px; margin-bottom: 5px; }
+  .item .evidence { color: var(--ink-soft); font-size: 17px; }
+  .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); margin: 22px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th { text-align: left; color: var(--ink-faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.good { color: var(--ok); font-weight: 500; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold); border-radius: 4px;
+    padding: 24px 28px; margin: 32px 0; font-size: 18px;
+  }
+  .callout strong { color: var(--ink); }
+
+  ul.next { font-size: 17px; line-height: 1.9; padding-left: 22px; }
+  ul.next strong { color: var(--ink); }
+
+  .closing { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--rule); }
+  .closing p { font-size: 19px; margin-bottom: 16px; }
+  .sign { margin-top: 48px; font-size: 17px; color: var(--ink-faint); }
+  .sign .name { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 640px) { h1.title { font-size: 30px; } .intro { font-size: 20px; } }
+</style>
+
+<div class="masthead">
+  <div class="wordmark">Mauro Mandalari<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+  <div class="meta-date">Agosto 2026</div>
+</div>
+
+<div class="kicker">Report mensile</div>
+<h1 class="title">Attività di agosto</h1>
+<p class="intro">Cosa è stato fatto sul sito questo mese, cosa è emerso durante i controlli e come stanno andando le cose.</p>
+
+<section class="block">
+  <div class="kicker">01 — Interventi eseguiti</div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Riscritti i titoli di 10 reparti, sul linguaggio reale dei pazienti</div>
+      <div class="evidence">I titoli usavano il nome tecnico della disciplina, mentre le persone cercano il professionista. Il caso più netto: la pagina di oculistica si presentava come "Oftalmologia", parola che <strong style="color: var(--ink)">nessuno cerca</strong>, mentre "oculista Bolzano" viene cercato <span class="num">600</span> volte a trimestre. Corretti anche nutrizionista, otorino, dermatologo, ortopedico, ginecologo e altri.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Collegamenti tra reparti e specialisti</div>
+      <div class="evidence">Ogni scheda medico ora rimanda ai reparti in cui opera, con un riquadro dedicato. Aggiunti inoltre <span class="num">20</span> collegamenti dentro i testi, dove un reparto ne cita già un altro. Aiutano i pazienti a orientarsi e Google a capire come sono legati i servizi.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Corretti 16 link non funzionanti</div>
+      <div class="evidence">Vecchi indirizzi ancora in circolazione — schede di medici non più in organico, pagine dismesse, documenti PDF storici — ora portano alla pagina giusta invece che a un errore.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Attivata la protezione automatica sui cambi di indirizzo</div>
+      <div class="evidence">Se in futuro una pagina pubblicata cambia indirizzo, il vecchio link continuerà a funzionare automaticamente. Prima non accadeva.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">02 — Cosa è emerso dai controlli</div>
+  <p class="block-explainer">Tre problemi individuati durante il monitoraggio, che non erano stati segnalati da nessuno perché <strong>non visibili senza controllare</strong>.</p>
+
+  <div class="item">
+    <div class="mark find">!</div>
+    <div class="body">
+      <div class="name">Il conteggio delle visite era incompleto</div>
+      <div class="evidence">Google Analytics registrava tra il <span class="num">30%</span> e il <span class="num">47%</span> di visite in meno rispetto a quelle realmente ricevute. Il confronto con i dati di Google Search Console lo ha reso evidente: il sito risultava ricevere meno visite totali di quelle che Google dichiarava di avergli inviato, il che è impossibile. Ora la misurazione è corretta.<br><br><strong style="color: var(--ink)">Attenzione leggendo i grafici</strong>: da metà luglio i numeri di Analytics appaiono quasi raddoppiati. Non è aumentato il traffico — è che prima non veniva contato tutto.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark find">!</div>
+    <div class="body">
+      <div class="name">Un link della homepage portava a una pagina di errore</div>
+      <div class="evidence">L'indirizzo della pagina del podcast era stato modificato dal pannello di gestione. La pagina restava online al nuovo indirizzo, ma il riquadro "Podcast" in homepage puntava ancora al vecchio: chi ci cliccava trovava un errore. Ripristinato l'indirizzo originale.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark find">!</div>
+    <div class="body">
+      <div class="name">Il registro degli errori conservava solo poche ore</div>
+      <div class="evidence">Lo strumento che raccoglie i link non funzionanti era configurato per tenere solo <span class="num">100</span> voci: si sovrascriveva più volte al giorno, rendendo di fatto impossibile il monitoraggio. Portato a <span class="num">1.000</span>: da settembre avremo dati reali su cui lavorare.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">03 — Come stanno andando le cose</div>
+  <p class="block-explainer">Confronto con lo stesso periodo dell'anno scorso: è l'unico modo corretto di leggere i numeri di un mese estivo, perché neutralizza le ferie.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>1–22 agosto</th><th>2025</th><th>2026</th><th>Variazione</th></tr>
+      <tr><td>Visite da Google</td><td>5.244</td><td>5.322</td><td class="good">+1,5%</td></tr>
+      <tr><td>Percentuale di clic</td><td>6,14%</td><td>6,57%</td><td class="good">+0,4 punti</td></tr>
+      <tr><td>Posizione media</td><td>12,1</td><td>6,9</td><td class="good">+5,2 posizioni</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size: 17px;">Un dato che merita attenzione: separando chi cerca il nome della clinica da chi cerca una prestazione senza conoscerla, <strong style="color: var(--ink)">le ricerche generiche portano le stesse visite dell'anno scorso pur comparendo un terzo di volte in meno</strong>. Il sito viene scelto più spesso di prima quando appare tra i risultati.</p>
+
+  <div class="callout">
+    <strong>Sui titoli riscritti il 3 agosto è ancora presto.</strong> Google ha ripassato quelle pagine solo tra il 18 e il 21 agosto: ci sono pochi giorni di dati, troppo pochi per dire se stanno funzionando. La verifica seria arriva nel report di fine settembre, quando ci sarà un mese pieno di osservazioni.
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">04 — Cosa farò a settembre</div>
+  <ul class="next">
+    <li><strong>Misurare l'effetto dei titoli riscritti</strong>, confrontando le 10 pagine modificate con quelle rimaste invariate — così l'eventuale miglioramento è attribuibile con certezza all'intervento e non alla stagione</li>
+    <li><strong>Analizzare il registro degli errori</strong>, che per la prima volta avrà accumulato dati significativi</li>
+    <li><strong>Estendere i collegamenti interni</strong> tra reparti affini e dagli articoli ai reparti corrispondenti</li>
+    <li><strong>Verificare l'indicizzazione</strong> delle pagine legali escluse a luglio, per confermare che siano uscite dai risultati di ricerca</li>
+  </ul>
+</section>
+
+<div class="closing">
+  <p>Agosto è stato un mese di consolidamento: ottimizzazioni sui contenuti già esistenti e correzione di tre problemi che erano invisibili senza un controllo sistematico.</p>
+</div>
+
+<div class="sign">
+  <div class="name">Mauro Mandalari</div>
+  <div>Consulenza SEO — Marienklinik Bozen</div>
+</div>
