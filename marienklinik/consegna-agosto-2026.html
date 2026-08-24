@@ -1,0 +1,243 @@
+<title>Consegna lavori — Marienklinik</title>
+<style>
+  :root {
+    --bg: #091529;
+    --surface: #0d1e35;
+    --surface-2: #112544;
+    --ink: #ffffff;
+    --ink-soft: #c8d4e8;
+    --ink-faint: #8a9ab8;
+    --gold: #e6b253;
+    --rule: rgba(200,212,232,0.14);
+    --ok: #7fc99b;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 72px 32px 110px;
+  }
+
+  h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+
+  .masthead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 10px 24px;
+    padding-bottom: 32px; margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark { font-weight: 800; letter-spacing: 0.08em; font-size: 19px; color: var(--ink); text-transform: uppercase; }
+  .wordmark .dot { color: var(--gold); margin: 0 8px; }
+  .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+  .meta-date { color: var(--ink-faint); font-size: 16px; }
+
+  .kicker {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--gold); font-size: 15px; font-weight: 700;
+    letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+
+  h1.title { font-size: 42px; margin-bottom: 14px; }
+  .intro { font-size: 22px; color: var(--ink-soft); margin-bottom: 12px; }
+  .intro-note { font-size: 17px; color: var(--ink-faint); margin-bottom: 52px; }
+
+  .status-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 60px; }
+  .status-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px 22px; box-shadow: var(--shadow); }
+  .status-card .n { font-size: 38px; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 8px; }
+  .status-card .label { font-size: 15px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  section.block { margin-bottom: 56px; }
+  .block-explainer {
+    font-size: 18px; color: var(--ink-soft);
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 18px 22px; margin-bottom: 24px;
+  }
+  .block-explainer strong { color: var(--ink); }
+
+  .item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-child { border-bottom: none; }
+  .item .mark {
+    flex-shrink: 0; width: 27px; height: 27px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; margin-top: 2px;
+    background: rgba(127,201,155,0.16); color: var(--ok);
+  }
+  .item .body { flex: 1; }
+  .item .name { color: var(--ink); font-weight: 500; font-size: 19px; margin-bottom: 5px; }
+  .item .evidence { color: var(--ink-soft); font-size: 17px; }
+  .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); margin: 22px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th { text-align: left; color: var(--ink-faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.good { color: var(--ok); font-weight: 500; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold); border-radius: 4px;
+    padding: 24px 28px; margin: 32px 0; font-size: 18px; color: var(--ink-soft);
+  }
+  .callout strong { color: var(--ink); }
+
+  .closing { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--rule); }
+  .closing p { font-size: 20px; margin-bottom: 16px; }
+  .sign { margin-top: 48px; font-size: 17px; color: var(--ink-faint); }
+  .sign .name { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .status-summary { grid-template-columns: 1fr; }
+    h1.title { font-size: 30px; }
+    .intro { font-size: 20px; }
+  }
+</style>
+
+<div class="masthead">
+  <div class="wordmark">Mauro Mandalari<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+  <div class="meta-date">Agosto 2026</div>
+</div>
+
+<div class="kicker">Consegna lavori</div>
+<h1 class="title">Il lavoro sul sito è completo</h1>
+<p class="intro">Questo documento chiude la parte di progetto concordata all'avvio: cosa è stato fatto, come è stato verificato e cosa prosegue da qui in avanti.</p>
+<p class="intro-note">Ogni voce è stata controllata direttamente sul sito online. Dove ci sono numeri, sono misurati con gli strumenti ufficiali di Google, non stimati.</p>
+
+<div class="status-summary">
+  <div class="status-card">
+    <div class="n">449</div>
+    <div class="label">Vecchi indirizzi reindirizzati</div>
+  </div>
+  <div class="status-card">
+    <div class="n">100%</div>
+    <div class="label">Pagine con SEO configurata</div>
+  </div>
+  <div class="status-card">
+    <div class="n">0</div>
+    <div class="label">Traffico perso nella migrazione</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="kicker">01 — Il risultato principale</div>
+  <p class="block-explainer">Quando un sito viene rifatto, tutti i suoi indirizzi cambiano. È il momento più delicato: i motori di ricerca devono capire che le pagine non sono sparite, ma si sono spostate. <strong>Una migrazione gestita male fa perdere tipicamente tra il 20% e il 40% delle visite da Google</strong>, spesso in modo permanente.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Periodo</th><th>Visite da Google</th><th>Pagine attive nei risultati</th></tr>
+      <tr><td>Giugno 2026</td><td>8.227</td><td>408</td></tr>
+      <tr><td>Luglio 2026</td><td class="good">8.248</td><td class="good">603</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size: 17px;">A luglio Google ha completato il passaggio dai vecchi ai nuovi indirizzi. Le visite sono rimaste invariate mentre il numero di pagine presenti nei risultati è cresciuto di <span class="num">195</span>: sono gli stessi contenuti, ritrovati al nuovo indirizzo.</p>
+  <p style="font-size: 17px;"><strong style="color: var(--ink)">Il traffico è passato interamente al nuovo sito, senza perdite.</strong> È esattamente ciò che i reindirizzamenti dovevano garantire.</p>
+</section>
+
+<section class="block">
+  <div class="kicker">02 — Le attività completate</div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">449 vecchi indirizzi reindirizzati</div>
+      <div class="evidence">Ogni vecchio indirizzo porta alla pagina più pertinente di oggi, in italiano e tedesco. Funzionano anche le varianti dei link condivisi su social ed email.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Titoli e descrizioni su Google, su tutte le pagine</div>
+      <div class="evidence">54 reparti, 128 schede specialista, 27 pagine e 10 articoli: nessuna pagina visibile su Google è rimasta senza. Corretto anche un errore di origine su <span class="num">6</span> pagine che mostravano il titolo di un reparto diverso.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Testi tedeschi corretti</div>
+      <div class="evidence"><span class="num">29</span> testi visibili su Google contenevano caratteri tedeschi scritti in modo improprio (per esempio "ue" al posto di "ü"), incluso il nome della regione. Corretti tutti.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Anteprime per la condivisione sui social</div>
+      <div class="evidence">Testo dedicato su tutti i 54 reparti, scritto per invogliare al clic invece di riusare il titolo tecnico.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Informazioni della clinica leggibili da Google</div>
+      <div class="evidence">Logo, indirizzo, orari di apertura, canali ufficiali e specialità mediche sono ora dichiarati in un formato che Google interpreta con certezza, non deducendoli dal testo.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Fondamenta tecniche</div>
+      <div class="evidence">Elenco pagine sempre aggiornato per i motori di ricerca, notifica immediata a Google e Bing a ogni pubblicazione, monitoraggio degli errori, pagine legali escluse dai risultati per non disperdere attenzione.</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Collegamenti tra le pagine del sito</div>
+      <div class="evidence">Ogni scheda specialista rimanda ai reparti in cui opera e viceversa. Aggiunti <span class="num">20</span> collegamenti dentro i testi, dove un reparto ne cita un altro: aiutano sia i pazienti a orientarsi, sia Google a capire come sono legati i servizi.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">03 — Come sta andando</div>
+  <p class="block-explainer">Sul rendimento va detta una cosa con chiarezza: <strong>è ancora presto per attribuire meriti al lavoro appena concluso</strong>. Gli ultimi interventi sono di inizio agosto e Google impiega settimane a recepirli. I numeri qui sotto servono a fotografare il punto di partenza, non a dichiarare risultati.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>1–22 agosto</th><th>2025</th><th>2026</th><th>Variazione</th></tr>
+      <tr><td>Visite da Google</td><td>5.244</td><td>5.322</td><td class="good">+1,5%</td></tr>
+      <tr><td>Percentuale di clic</td><td>6,14%</td><td>6,57%</td><td class="good">+0,4 punti</td></tr>
+      <tr><td>Posizione media</td><td>12,1</td><td>6,9</td><td class="good">+5,2 posizioni</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size: 17px;">Il confronto con lo stesso periodo dell'anno scorso è il più affidabile, perché neutralizza la stagionalità estiva. <strong style="color: var(--ink)">Il miglioramento di posizione è però in gran parte precedente</strong>: era già maturato tra l'autunno 2025 e la primavera 2026, con il rifacimento del sito. Sarebbe scorretto attribuirlo agli interventi di quest'estate.</p>
+
+  <p style="font-size: 17px;">Un dato utile per il futuro: separando chi cerca il nome della clinica da chi cerca una prestazione senza conoscerla, <strong style="color: var(--ink)">le ricerche generiche portano oggi lo stesso numero di visite dell'anno scorso ma con un terzo di visibilità in meno</strong>. Significa che il sito converte meglio: quando compare, viene scelto più spesso di prima.</p>
+</section>
+
+<div class="callout">
+  <strong>Perché in questo documento non trovi grafici di crescita.</strong> Presentare gli scostamenti di queste settimane come un risultato sarebbe fuorviante: sono oscillazioni normali, e i lavori più recenti non hanno ancora avuto il tempo di produrre effetti. La misurazione seria arriva a settembre-ottobre, quando il confronto sarà tra periodi entrambi assestati.
+</div>
+
+<section class="block">
+  <div class="kicker">04 — Cosa prosegue</div>
+  <p class="block-explainer">Con questo documento si chiude la parte di lavoro a progetto. Prosegue invece l'attività mensile continuativa, che comprende:</p>
+  <ul style="font-size: 17px; line-height: 1.9; padding-left: 22px;">
+    <li>Monitoraggio delle posizioni e degli errori sul sito</li>
+    <li>Correzione dei link non funzionanti man mano che emergono</li>
+    <li>Ottimizzazioni ricorrenti sui contenuti che ne hanno più bisogno</li>
+    <li>Rafforzamento dei collegamenti tra le pagine</li>
+    <li>Rapporti periodici sull'andamento</li>
+  </ul>
+  <p style="font-size: 17px; margin-top: 18px;">La prima lettura vera dei risultati è prevista tra settembre e ottobre.</p>
+</section>
+
+<div class="closing">
+  <p>Tutte le attività previste a progetto risultano completate e verificate sul sito. Il passaggio al nuovo sito si è concluso senza perdita di visibilità su Google, che era l'obiettivo principale di questa fase.</p>
+</div>
+
+<div class="sign">
+  <div class="name">Mauro Mandalari</div>
+  <div>Consulenza SEO — Marienklinik Bozen</div>
+</div>
