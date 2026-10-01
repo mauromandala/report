@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Resoconto immagini Eurostar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;800;900&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Roboto+Mono:wght@500&display=swap">
+<style>
+/* Layout: colonna di lettura con indice laterale su schermi larghi; sezioni separate da un filetto navy come nel documento "Immagini sito Eurostar". Identità Eurostar: navy + blu, Barlow maiuscolo per i titoli. */
+:root{
+  --bg:#F4F5FA; --surface:#FFFFFF; --ink:#1C265A; --text:#3B4154; --muted:#646B80;
+  --line:#DDE1EC; --line-strong:#B9C0D4; --accent:#25387E; --accent-soft:#E7EAF5;
+  --ok:#1E7A4C; --ok-soft:#E3F3EA; --wait:#9A5B00; --wait-soft:#FBF0DD; --no:#A3262E; --no-soft:#F8E4E5;
+  --display:"Barlow","Arial Narrow",Arial,sans-serif; --body:"Roboto",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Roboto Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B1027; --surface:#111836; --ink:#E8EBF7; --text:#C4C9DA; --muted:#8E95AE;
+  --line:#252E55; --line-strong:#3A4577; --accent:#9DB0F0; --accent-soft:#1A2452;
+  --ok:#7FD3A6; --ok-soft:#15352A; --wait:#F0C27A; --wait-soft:#3A2C12; --no:#F29CA2; --no-soft:#3D1A20; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1027; --surface:#111836; --ink:#E8EBF7; --text:#C4C9DA; --muted:#8E95AE;
+  --line:#252E55; --line-strong:#3A4577; --accent:#9DB0F0; --accent-soft:#1A2452;
+  --ok:#7FD3A6; --ok-soft:#15352A; --wait:#F0C27A; --wait-soft:#3A2C12; --no:#F29CA2; --no-soft:#3D1A20; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:400 15px/1.6 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:clamp(28px,5vw,56px);display:grid;grid-template-columns:minmax(0,1fr);gap:32px}
+@media (min-width:1000px){.wrap{grid-template-columns:220px minmax(0,1fr);column-gap:48px}.top,.foot{grid-column:1/-1}.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start}}
+main{min-width:0;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);text-transform:uppercase;text-wrap:balance;margin:0}
+.eyebrow{margin:0 0 10px;font:600 12px/1 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+h1{font-weight:900;font-size:clamp(34px,5.5vw,58px);line-height:.95}
+.intro{max-width:64ch;margin:18px 0 0;font-size:17px}
+.meta{margin:14px 0 0;font-size:13px;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:14px 36px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.facts div{display:flex;flex-direction:column}
+.facts b{font:800 34px/1 var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.facts span{margin-top:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.toc h2{font-size:13px;letter-spacing:.18em;font-weight:800;margin-bottom:10px;color:var(--muted)}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--line)}
+.toc a{display:block;padding:5px 0 5px 14px;color:var(--text);text-decoration:none;font-size:14px}
+.toc a:hover{color:var(--accent)}
+@media (max-width:999px){.toc ol{flex-direction:row;flex-wrap:wrap;border-left:0;gap:6px}.toc a{padding:4px 10px;border:1px solid var(--line);background:var(--surface);font-size:13px}}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sec{scroll-margin-top:24px;display:flex;flex-direction:column;gap:18px;padding-top:28px;border-top:3px solid var(--ink)}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sec-h h2{font-weight:800;font-size:clamp(22px,3vw,30px);line-height:1.05}
+.count{font:500 13px/1 var(--mono);color:var(--accent);background:var(--accent-soft);padding:6px 10px;white-space:nowrap}
+.lead{margin:0;max-width:70ch}
+.small{margin:0;max-width:72ch;font-size:14px;color:var(--muted)}
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th{font:600 11px/1.3 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-strong);background:var(--accent-soft)}
+td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top}
+td strong{color:var(--ink)}
+td.n{font-family:var(--mono);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink)}
+.pill{display:inline-block;font:600 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;white-space:nowrap}
+.pill.ok{color:var(--ok);background:var(--ok-soft)}
+.pill.wait{color:var(--wait);background:var(--wait-soft)}
+.pill.no{color:var(--no);background:var(--no-soft)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:24px}
+.box{background:var(--surface);border:1px solid var(--line);padding:18px 20px;min-width:0}
+.box h3{font-weight:800;font-size:17px;letter-spacing:.04em;margin-bottom:12px}
+.todo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.todo li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start}
+.todo li::before{content:"";width:14px;height:14px;margin-top:4px;border:2px solid var(--line-strong)}
+.todo b{color:var(--ink)}
+.todo .note{display:block;font-size:13px;color:var(--muted)}
+.why{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.why strong{color:var(--ink)}
+.foot{padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.fn{font:500 12.5px/1.4 var(--mono);color:var(--accent);background:var(--accent-soft);padding:1px 6px;word-break:break-all}
+</style>
+
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<p class="eyebrow">Eurostar · nuovo sito web · sito di prova</p>
+<h1>Immagini: cosa è online e cosa manca</h1>
+<p class="intro">Resoconto del lavoro sulle immagini caricate da Ilaria nella cartella Drive “Immagini sito”: cosa è già sul sito di prova e perché è stato possibile, cosa manca per chiudere il sito e chi deve fornirlo.</p>
+<p class="meta">Aggiornato al 30 settembre 2026 · sito di prova: <a href="https://eurostar.demoengagemint.it/">eurostar.demoengagemint.it</a></p>
+<div class="facts">
+<div><b>164</b><span>file di Drive online</span></div>
+<div><b>14</b><span>macchine con foto</span></div>
+<div><b>41</b><span>loghi clienti</span></div>
+<div><b>16 / 16</b><span>news con immagine</span></div>
+<div><b>18</b><span>cose da ricevere o confermare</span></div>
+</div>
+</header>
+
+<nav class="toc" aria-label="Sezioni del documento"><h2>Sezioni</h2><ol>
+<li><a href="#fatto">Cosa è online</a></li>
+<li><a href="#perche">Perché è stato possibile</a></li>
+<li><a href="#punti">I 13 punti di Ilaria</a></li>
+<li><a href="#manca">Cosa manca</a></li>
+<li><a href="#note">Scelte tecniche</a></li>
+</ol></nav>
+
+<main>
+<section id="fatto" class="sec">
+<header class="sec-h"><h2>Cosa è online</h2><span class="count">sezione per sezione</span></header>
+<p class="lead">Tutte le immagini sono sul sito di prova in italiano e in inglese (dove la pagina inglese esiste), verificate nel browser a 1440 e 375 px.</p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Sezione</th><th scope="col">Cartella Drive</th><th scope="col">File</th><th scope="col">Cosa è stato fatto</th><th scope="col">Stato</th></tr></thead>
+<tbody>
+<tr><td><strong>Sfondi delle testate</strong></td><td>01-sfondi-testate</td><td class="n">21</td><td>Categorie, settori, Squadron, Referenze, Cataloghi, Lavora con noi (e posizioni), News. Velatura nei blu del design system, breadcrumb e testi verificati per la leggibilità. Ogni pagina ha in amministrazione il campo “Immagine testata” per cambiarla.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Home</strong></td><td>02-home</td><td class="n">6</td><td>Blocco “Al tuo fianco” (tecnico in assistenza), blocco tecnologia (ufficio tecnico), foto della citazione di Alessandro Castagno, sfondi di Percorso 1 e 2 (blu sfumato sull’immagine), sfondo di “Progettiamo insieme”. In più “Macchine in evidenza” con MEC SI, SKILLFILL e ATHENA e il nastro dei loghi.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Card dei settori</strong></td><td>03-card-settori</td><td class="n">10</td><td>Pagina Settori e riquadro in evidenza del menu Settori (Vino).</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Macchine</strong></td><td>04-macchine</td><td class="n">68</td><td>14 macchine: Canfill, Dualfill, Maxima, MEC AV, MEC ISO, MEC LD, MEC LP, MEC SI, MEC VOL, Neck Handling, Powerfill, Skillfill, Stelle universali, Twist Rinser. Foto principale nelle card (catalogo, categorie, settori, menu) e galleria completa di dettagli nella scheda.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Squadron</strong></td><td>05-squadron</td><td class="n">2</td><td>ATHENA ed EXACTA scontornate nelle schede della pagina Squadron e in Home.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Servizi</strong></td><td>06-servizi</td><td class="n">5</td><td>Le 4 card post-vendita e il planisfero “Vi assistiamo in tutto il mondo”.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Chi siamo</strong></td><td>07-chi-siamo</td><td class="n">11</td><td>Stabilimento, ufficio tecnico e produzione, 8 ritratti del team, team commerciale. Il riquadro dell’officina resta vuoto.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Loghi dei clienti</strong></td><td>08-loghi-clienti</td><td class="n">41</td><td>Referenze a colori su riquadri chiari; nastro della Home con versioni bianche. 25 dei 29 clienti già in elenco più 16 marchi presenti su Drive e aggiunti all’elenco.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>News</strong></td><td>09-news + riusi</td><td class="n">12 + 4</td><td>12 immagini di Drive negli articoli corrispondenti. Per i 4 articoli senza foto (Castello di Verrazzano, Frantoio Bonamini, Powerfill a flussimetri, 30 anni Eurostar) sono state riusate foto di Maxima, MEC AV, Powerfill e dello stabilimento.</td><td><span class="pill ok">online</span></td></tr>
+<tr><td><strong>Cataloghi</strong></td><td>—</td><td class="n">1</td><td>Pagina completa con un PDF di esempio (“Catalogo di esempio, da sostituire”) collegato a tutte le righe, per mostrarne la struttura.</td><td><span class="pill wait">segnaposto</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="perche" class="sec">
+<header class="sec-h"><h2>Perché è stato possibile</h2></header>
+<ul class="why">
+<li><strong>File nella misura giusta.</strong> Sfondi 2560 × 1440, card settori 1200 × 1500, foto 4:3 a 1600 × 1200, ritratti 1000 × 1000: proporzioni già corrette, nessun ritaglio da inventare.</li>
+<li><strong>Nomi file e cartelle come da specifiche.</strong> Hanno permesso di associare ogni immagine alla pagina giusta senza ambiguità. Dove il nome era generico (molti loghi) l’associazione è stata fatta a vista.</li>
+<li><strong>Formato e peso sistemati da noi.</strong> JPG e PNG convertiti in WebP entro i pesi indicati (sfondi 350 KB, foto 250–300 KB, ritratti 150 KB), metadati rimossi. Non serve riesportare nulla.</li>
+<li><strong>Loghi accettati anche in PNG/JPG.</strong> Fondi bianchi scontornati, loghi bianchi resi scuri per i riquadri chiari, SVG convertiti; per il nastro blu della Home sono state generate le versioni bianche.</li>
+<li><strong>Macchine scontornate.</strong> La foto principale su fondo trasparente funziona sia sulle card grigie sia sul blu della Home.</li>
+</ul>
+</section>
+
+<section id="punti" class="sec">
+<header class="sec-h"><h2>I 13 punti di Ilaria</h2><span class="count">email del 29/09</span></header>
+<div class="tw"><table>
+<thead><tr><th scope="col">Punto</th><th scope="col">Esito</th><th scope="col">Stato</th></tr></thead>
+<tbody>
+<tr><td><strong>1. Eagle PK / VA / Gemini</strong> (upscale)</td><td>Non ancora pubblicate: rientrano nella decisione sulle tappatrici (punto 2).</td><td><span class="pill wait">in attesa</span></td></tr>
+<tr><td><strong>2. Tappatrici</strong> senza macchina intera</td><td>Confermato: ci sono solo teste tappanti e dettagli. Serve decidere cosa usare come foto principale (vedi “Cosa manca”).</td><td><span class="pill wait">da decidere</span></td></tr>
+<tr><td><strong>3. Home, testata</strong></td><td>Online il video della proposta grafica; si sostituisce quando arriva quello del cliente.</td><td><span class="pill wait">in attesa</span></td></tr>
+<tr><td><strong>4. Home, bottiglia</strong></td><td>Online, dal mockup HTML.</td><td><span class="pill ok">fatto</span></td></tr>
+<tr><td><strong>5. Home, Percorso 1 e 2</strong></td><td>Inserite come sfondo. Per la leggibilità il box è blu con testo bianco e sfuma nell’immagine a destra.</td><td><span class="pill ok">fatto</span></td></tr>
+<tr><td><strong>6. Home, tecnologia</strong></td><td>Usata <span class="fn">home-innovazione-tecnologia.jpg</span>.</td><td><span class="pill ok">fatto</span></td></tr>
+<tr><td><strong>7. Home, Progettiamo insieme</strong></td><td>Usata <span class="fn">home-progettiamo-insieme-sfondo.jpg</span>.</td><td><span class="pill ok">fatto</span></td></tr>
+<tr><td><strong>8. Home, citazione</strong></td><td>Usata <span class="fn">alessandro-castagno-home.jpg</span>; in Chi siamo il ritratto del team.</td><td><span class="pill ok">fatto</span></td></tr>
+<tr><td><strong>9. Squadron, testata e macchine</strong></td><td>ATHENA ed EXACTA online. La testata usa il segnaposto (stessa foto di Cataloghi): serve un’immagine vera.</td><td><span class="pill wait">in attesa</span></td></tr>
+<tr><td><strong>10. Logo Squadron</strong> vettoriale</td><td>Ancora mancante: il riquadro del logo nella fascia Squadron della Home è vuoto.</td><td><span class="pill no">manca</span></td></tr>
+<tr><td><strong>11. Nomenclatura macchine</strong></td><td>Associate per cartella e verificate sulle targhe visibili; restano da confermare Neck Handling e Twist Rinser e le descrizioni dei dettagli.</td><td><span class="pill wait">da confermare</span></td></tr>
+<tr><td><strong>12. Azienda, officina</strong></td><td>Il file su Drive è un doppione della foto dell’ufficio tecnico: riquadro lasciato vuoto.</td><td><span class="pill no">manca</span></td></tr>
+<tr><td><strong>13. Loghi clienti</strong></td><td>PNG/JPG accettati e lavorati da noi. 41 online; 4 clienti ancora senza logo.</td><td><span class="pill ok">fatto</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="manca" class="sec">
+<header class="sec-h"><h2>Cosa manca per chiudere il sito</h2><span class="count">18 voci</span></header>
+<div class="two">
+<div class="box">
+<h3>Da Ilaria (grafica)</h3>
+<ul class="todo">
+<li><span><b>Sfondo del Catalogo macchine</b> (<span class="fn">hero-catalogo</span>, 2560 × 1440)<span class="note">Oggi usa provvisoriamente la foto della testata Riempitrici.</span></span></li>
+<li><span><b>Sfondo della testata Squadron</b><span class="note">Oggi c’è il segnaposto, uguale alla testata Cataloghi.</span></span></li>
+<li><span><b>Logo Squadron in SVG</b>, versione bianca e a colori<span class="note">Per la fascia Squadron della Home (riquadro vuoto).</span></span></li>
+<li><span><b>Foto principale delle tappatrici</b> se il cliente fornisce scatti della macchina intera<span class="note">Eagle PK, Eagle VA, Gemini F, Stelle a geometria variabile hanno solo dettagli; Gemini R e Gemini RF hanno file identici.</span></span></li>
+<li><span><b>Loghi mancanti</b>: MIB, Louisiana Spirits, Villa Bys – Domaine Mont d’Oraàs, Birrificio Exit, più il logo ufficiale di Kuban Vino<span class="note">Oggi in Referenze compare il nome; nel nastro della Home non compaiono.</span></span></li>
+<li><span><b>Versioni migliori dei loghi piccoli</b> (facoltativo)<span class="note">Fattoria La Vialla, Better Jusage, Frantoio Bonamini, Firriato, Biofruits, Embotelladora Capri, CCU: sotto gli 800 px.</span></span></li>
+</ul>
+</div>
+<div class="box">
+<h3>Da Serena e dal cliente</h3>
+<ul class="todo">
+<li><span><b>Video della testata della Home</b><span class="note">In attesa del cliente; oggi è online quello della proposta.</span></span></li>
+<li><span><b>Conferma foto ↔ macchina</b><span class="note">In particolare Neck Handling (la foto mostra la targa “MEC ISO S 20/32/6VPFILL”) e Twist Rinser (foto tagliata ai bordi).</span></span></li>
+<li><span><b>Tappatrici: cosa usare nelle card</b><span class="note">Le teste tappanti di Eagle C e Gemini R come “macchina”? Per le altre, un dettaglio o attendere nuovi scatti?</span></span></li>
+<li><span><b>Descrizioni dei dettagli delle macchine</b> (file <span class="fn">descrizioni.txt</span>)<span class="note">Servono per i testi alternativi; oggi sono generici (“MEC LD, dettaglio 1”).</span></span></li>
+<li><span><b>Conferma dei 16 nuovi clienti in Referenze</b><span class="note">Banfi, Bertani, BrewDog, Brema, Capaia, Coca-Cola, Diageo, Donnafugata, Ferrero, Firriato, Gancia, Giesen, Heinz, Michele Chiarlo, Rhum Damoiseau, Unilever.</span></span></li>
+<li><span><b>Conferma ritratti ↔ nomi</b> in Chi siamo<span class="note">Associati dai nomi file.</span></span></li>
+<li><span><b>Approvazione delle immagini dei settori</b><span class="note">Generate con IA (testate e card).</span></span></li>
+<li><span><b>Foto dell’officina</b> per Chi siamo</span></li>
+<li><span><b>PDF dei cataloghi</b> (italiano ed eventualmente inglese)<span class="note">Si caricano dalla pagina “Cataloghi” in amministrazione.</span></span></li>
+<li><span><b>Foto delle altre macchine Squadron e delle usate</b><span class="note">Olympia, VOL, Evox, EasyKeg e le altre: su Drive c’erano solo ATHENA ed EXACTA.</span></span></li>
+<li><span><b>News</b>: conferma delle 4 foto riusate; articolo per CFIA Rennes<span class="note">L’immagine c’è, l’articolo no.</span></span></li>
+<li><span><b>Nuovi scatti delle macchine</b> (quando previsti)<span class="note">Da esportare direttamente nei formati delle specifiche.</span></span></li>
+</ul>
+</div>
+</div>
+<p class="small">Le traduzioni inglesi di macchine e settori restano in attesa dei testi: quando arrivano, le pagine inglesi riprendono le stesse immagini.</p>
+</section>
+
+<section id="note" class="sec">
+<header class="sec-h"><h2>Scelte tecniche</h2></header>
+<ul class="why">
+<li><strong>Velatura delle testate nei blu del design system</strong> (Navy 900 → Navy 800) invece del nero; breadcrumb più chiari per la leggibilità sulle foto.</li>
+<li><strong>Immagini modificabili dall’amministrazione</strong>: campo “Immagine testata” su pagine, categorie e settori; “Macchine › Testata catalogo”; logo e logo bianco per ogni cliente nella pagina “Clienti”.</li>
+<li><strong>Ottimizzazione</strong>: i file sono già ottimizzati; il plugin Image Optimizer resta attivo per i caricamenti futuri. Non va lanciata l’ottimizzazione di massa sulla libreria.</li>
+<li><strong>Testi alternativi</strong> in italiano e inglese per le foto che portano contenuto; le foto decorative accanto a un titolo hanno testo alternativo vuoto.</li>
+</ul>
+</section>
+
+
+</main>
+<footer class="foot">Resoconto preparato sul sito di prova Eurostar. Riferimento per formati e nomi file: documento “Immagini sito Eurostar”.</footer>
+</div>
+
+
+</body>
+</html>
