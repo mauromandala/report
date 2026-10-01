@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Resoconto sviluppo Eurostar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Roboto:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: colonna di lettura da documento tecnico, testata scura con taglio diagonale come il sito, sezioni separate da filetti */
+:root{
+  --bg:#F4F5F9; --surface:#FFFFFF; --ink:#141B33; --muted:#4A4F5E; --line:#D8DCE6;
+  --navy:#0D1633; --accent:#25387E; --accent-soft:#E6EAF5; --ok:#1F6B45; --ok-soft:#E3F1E9; --warn:#8A5A00; --warn-soft:#FBF0D9;
+  --on-navy:#FFFFFF; --on-navy-muted:rgba(255,255,255,.78);
+  --f-display:"Barlow","Arial Narrow",Arial,sans-serif;
+  --f-body:"Roboto",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --w:1080px; --read:68ch;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1020; --surface:#131A2E; --ink:#E8EBF4; --muted:#A9B0C4; --line:#283149;
+  --navy:#050915; --accent:#9FB0D8; --accent-soft:#1C2645; --ok:#7FD1A3; --ok-soft:#12291E; --warn:#F0C46B; --warn-soft:#2B2210;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1020; --surface:#131A2E; --ink:#E8EBF4; --muted:#A9B0C4; --line:#283149;
+  --navy:#050915; --accent:#9FB0D8; --accent-soft:#1C2645; --ok:#7FD1A3; --ok-soft:#12291E; --warn:#F0C46B; --warn-soft:#2B2210;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);margin:0}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.wrap{max-width:var(--w);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h2{font-size:clamp(26px,3.4vw,34px);font-weight:800;text-transform:uppercase;letter-spacing:.01em;line-height:1.1}
+h3,h4{font-family:var(--f-display);font-size:19px;font-weight:700;line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+.kicker{font:500 12px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+/* Testata */
+.hero{background:var(--navy);color:var(--on-navy);clip-path:polygon(0 0,100% 0,100% calc(100% - 4vw),0 100%);padding-block:56px calc(56px + 4vw)}
+.hero .kicker{color:var(--on-navy-muted)}
+.hero h1{font-size:clamp(34px,5.6vw,62px);font-weight:800;text-transform:uppercase;line-height:1.02;margin-top:14px;max-width:18ch}
+.hero .lead{color:var(--on-navy-muted);font-size:clamp(17px,1.6vw,19px);max-width:var(--read);margin-top:22px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:28px;font:400 13px/1.5 var(--f-mono);color:var(--on-navy-muted)}
+
+/* Numeri verificati */
+.figures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:-28px;position:relative}
+.fig{background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:6px;min-width:0}
+@media (max-width:760px){.figures{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.figures{grid-template-columns:1fr}}
+.fig b{font:800 40px/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--ink)}
+.fig span{font-size:14px;color:var(--muted);line-height:1.45}
+
+section{padding-block:56px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:var(--read)}
+.sec-head p{color:var(--muted);font-size:17px}
+
+/* Obiettivi */
+.goals{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.goal{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr) minmax(0,1.1fr);gap:20px 32px;padding-block:22px;border-bottom:1px solid var(--line)}
+.goal h3{display:flex;gap:10px;align-items:baseline}
+.goal h3 .n{font:500 13px var(--f-mono);color:var(--accent)}
+.goal .how{color:var(--ink)}
+.goal .proof{font-size:14.5px;color:var(--muted);border-left:3px solid var(--ok);padding-left:14px}
+.goal .proof strong{color:var(--ok);font-weight:500}
+.colhead{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr) minmax(0,1.1fr);gap:32px;font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:10px}
+@media (max-width:820px){.goal,.colhead{grid-template-columns:1fr}.colhead{display:none}}
+
+/* Liste a due colonne */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:28px 40px}
+.item{display:flex;flex-direction:column;gap:8px;min-width:0}
+.item p{color:var(--muted)}
+.item p strong{color:var(--ink);font-weight:500}
+
+/* Albero degli indirizzi */
+.tree{background:var(--surface);border:1px solid var(--line);padding:20px 22px;overflow-x:auto;margin-top:8px}
+.tree pre{margin:0;font:400 13.5px/1.75 var(--f-mono);color:var(--ink);white-space:pre}
+.tree .c{color:var(--muted)}
+.tree .h{color:var(--accent);font-weight:500}
+
+/* Riquadri */
+.note{background:var(--accent-soft);padding:20px 22px;display:flex;flex-direction:column;gap:8px;margin-top:32px;max-width:var(--read)}
+.note h3{font-size:16px;text-transform:uppercase;letter-spacing:.03em}
+.note p,.note li{color:var(--ink);font-size:15px}
+.note ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+
+/* Persone */
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.person{background:var(--surface);padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.person ul{margin:0;padding-left:18px;color:var(--muted);font-size:15px;display:flex;flex-direction:column;gap:6px}
+.person .tag{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+/* Checklist lancio */
+.todo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px 40px}
+.todo h3{font-size:16px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px}
+.todo ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.todo li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:15px;color:var(--muted)}
+.todo li::before{content:"";width:12px;height:12px;border:1.5px solid var(--warn);margin-top:6px}
+.todo li strong{color:var(--ink);font-weight:500}
+
+/* Frasi per il cliente */
+.pitch{display:flex;flex-direction:column;gap:0;border-top:3px solid var(--accent)}
+.pitch blockquote{margin:0;padding:22px 0;border-bottom:1px solid var(--line);font:600 clamp(19px,2vw,23px)/1.35 var(--f-display);max-width:60ch}
+.pitch blockquote small{display:block;margin-top:8px;font:400 15px/1.55 var(--f-body);color:var(--muted)}
+
+/* Architettura: modello dati */
+.model{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.1fr) auto minmax(0,1fr);gap:16px;align-items:stretch;margin-top:8px}
+.model .col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.model .col-title{font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ent{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.ent.core{border:2px solid var(--accent)}
+.ent b{font:700 17px/1.2 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.ent code{font:400 12.5px var(--f-mono);color:var(--accent);word-break:break-word}
+.ent span{font-size:14px;color:var(--muted);line-height:1.45}
+.arrow{display:flex;align-items:center;justify-content:center;font:400 22px var(--f-mono);color:var(--accent)}
+.out{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.out li{background:var(--accent-soft);padding:9px 12px;font-size:14px}
+@media (max-width:900px){.model{grid-template-columns:1fr}.arrow{transform:rotate(90deg);height:28px}}
+.tbl-wrap{overflow-x:auto;margin-top:8px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:640px;background:var(--surface);font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+thead th{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tbody th{font-weight:500;color:var(--ink);white-space:nowrap}
+td{color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;white-space:nowrap}
+tr:last-child th,tr:last-child td{border-bottom:0}
+.sub{margin-top:44px;display:flex;flex-direction:column;gap:10px}
+.sub > p{color:var(--muted);max-width:var(--read)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.stack span{font:400 13px var(--f-mono);border:1px solid var(--line);background:var(--surface);padding:4px 10px}
+.method{font-size:14px;color:var(--muted);max-width:var(--read);display:flex;flex-direction:column;gap:8px}
+.method code,.item code{font:400 13px var(--f-mono);background:var(--accent-soft);padding:1px 5px}
+footer{padding-block:32px 48px;font:400 13px var(--f-mono);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Sviluppo WordPress · staging eurostar.demoengagemint.it · verifiche del 1 ottobre 2026</p>
+    <h1>Un sito pulito, accessibile e bilingue</h1>
+    <p class="lead">Questo resoconto riassume il lavoro di sviluppo del nuovo sito Eurostar, confrontato con gli obiettivi fissati all'avvio. Serve a Serena e Paolo per presentarlo al cliente. Ogni affermazione è stata verificata sul sito, e i numeri vengono dalle prove automatiche e manuali fatte sulle pagine vere.</p>
+    <div class="meta"><span>WordPress 7.1 · Elementor Pro 4 · ACF Pro · WPML</span><span>Italiano e inglese</span><span>WCAG 2.1 livello AA</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="figures" aria-label="Numeri verificati">
+    <div class="fig"><b>62</b><span>pagine analizzate in italiano e inglese, su desktop e su telefono</span></div>
+    <div class="fig"><b>0</b><span>errori di accessibilità WCAG 2.1 AA trovati dal controllo automatico</span></div>
+    <div class="fig"><b>62/62</b><span>pagine con un solo titolo principale (H1)</span></div>
+    <div class="fig"><b>0</b><span>immagini senza testo alternativo, su 875 mostrate nelle pagine</span></div>
+    <div class="fig"><b>29/29</b><span>prove di navigazione da tastiera superate</span></div>
+    <div class="fig"><b>5</b><span>larghezze di schermo di confronto con il progetto grafico, su 24 pagine</span></div>
+  </div>
+
+  <section aria-labelledby="obiettivi">
+    <div class="sec-head">
+      <p class="kicker">Obiettivi e risultati</p>
+      <h2 id="obiettivi">Cosa ci eravamo prefissi</h2>
+      <p>All'avvio dello sviluppo abbiamo fissato cinque obiettivi. Per ognuno: come l'abbiamo raggiunto e come lo abbiamo verificato.</p>
+    </div>
+    <div class="colhead" aria-hidden="true"><span>Obiettivo</span><span>Come l'abbiamo raggiunto</span><span>Prova</span></div>
+    <div class="goals">
+      <div class="goal">
+        <h3><span class="n">1</span>Fedele al progetto approvato</h3>
+        <p class="how">Il sito ricostruisce il wireframe validato con Serena, elemento per elemento. La Home segue la proposta grafica di Ilaria. Le modifiche di Serena del 29/09 sono applicate in italiano e in inglese.</p>
+        <p class="proof"><strong>Confronto al pixel</strong> di 24 pagine a 375, 768, 1024, 1280 e 1440 px. Stessi caratteri e colori, nessuno scroll orizzontale a nessuna larghezza.</p>
+      </div>
+      <div class="goal">
+        <h3><span class="n">2</span>Accessibile a tutti</h3>
+        <p class="how">Livello WCAG 2.1 AA, il riferimento della norma europea EN 301 549. L'accessibilità è scritta nel codice delle pagine, non affidata a un widget sovrapposto.</p>
+        <p class="proof"><strong>0 errori</strong> al controllo automatico su 62 pagine, 29/29 prove da tastiera, zoom al 200% senza testi tagliati, contrasto delle testate fotografiche 54/54 sopra soglia (minimo 5,72:1).</p>
+      </div>
+      <div class="goal">
+        <h3><span class="n">3</span>Bilingue italiano e inglese</h3>
+        <p class="how">Il sistema di traduzione è stato installato prima di costruire le pagine, non aggiunto alla fine. Ogni pagina inglese è collegata alla sua versione italiana.</p>
+        <p class="proof"><strong>In inglese oggi:</strong> 11 pagine, 6 categorie, il settore Vino, 5 posizioni di lavoro, la scheda MEC LD e i 14 modelli Squadron. Il resto aspetta i testi di chi traduce.</p>
+      </div>
+      <div class="goal">
+        <h3><span class="n">4</span>Gestibile dal cliente</h3>
+        <p class="how">Ogni contenuto ha un modulo con campi precisi: chi aggiorna il sito compila dati, non impagina. Menu, clienti, cataloghi e foto delle testate si cambiano dall'amministrazione.</p>
+        <p class="proof"><strong>Un dato, un posto solo:</strong> 35 macchine, 10 settori, 6 categorie e 16 news gestiti da moduli. Le pagine che li mostrano si aggiornano da sole.</p>
+      </div>
+      <div class="goal">
+        <h3><span class="n">5</span>Struttura pronta per i motori di ricerca</h3>
+        <p class="how">Indirizzi leggibili, codice che descrive il contenuto, lingua dichiarata su ogni pagina, immagini leggere e descritte.</p>
+        <p class="proof"><strong>62/62</strong> pagine con un solo H1 e con le aree principali marcate. Lingue collegate su tutte le pagine tradotte. Dettagli nella sezione seguente.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="struttura">
+    <div class="sec-head">
+      <p class="kicker">Per i motori di ricerca</p>
+      <h2 id="struttura">Una struttura pulita</h2>
+      <p>Un motore di ricerca legge il codice della pagina, non il suo aspetto. Per questo abbiamo curato quello che non si vede: come sono organizzati i contenuti, come sono scritti gli indirizzi e come il codice descrive ogni parte della pagina.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="item">
+        <h3>Ogni contenuto ha un indirizzo leggibile</h3>
+        <p>Gli indirizzi dicono cosa contiene la pagina, nelle due lingue. Nessun numero, nessun parametro: <strong>una pagina, un indirizzo</strong>.</p>
+        <div class="tree" role="figure" aria-label="Esempi di indirizzi del sito">
+<pre><span class="h">/macchine/</span>                       <span class="c">catalogo completo con filtro</span>
+<span class="h">/macchine/mec-ld/</span>                <span class="c">scheda di una macchina</span>
+<span class="h">/categoria-macchina/riempitrici/</span> <span class="c">una famiglia di macchine</span>
+<span class="h">/settori/vino/</span>                   <span class="c">macchine per un settore</span>
+<span class="h">/squadron/</span>                       <span class="c">la linea Squadron</span>
+<span class="h">/en/settori/wine/</span>                <span class="c">la stessa pagina in inglese</span></pre>
+        </div>
+      </div>
+      <div class="item">
+        <h3>Ogni dato si scrive una volta sola</h3>
+        <p>Le macchine Eurostar e Squadron sono un unico tipo di contenuto. Categorie e settori sono classificazioni collegate alle macchine. L'elenco "Le nostre macchine" di ogni settore si compone da solo con le macchine che servono quel settore.</p>
+        <p>Il risultato: <strong>nessuna informazione contraddittoria</strong> tra una pagina e l'altra. Un dato tecnico che compare in testata e in tabella viene dallo stesso campo.</p>
+      </div>
+      <div class="item">
+        <h3>Il codice descrive il contenuto</h3>
+        <p>Ogni pagina ha <strong>un solo titolo principale</strong> (62 su 62) e i titoli seguono la gerarchia del contenuto. Testata, navigazione, contenuto e piè di pagina sono marcati come tali.</p>
+        <p>Il percorso di navigazione (breadcrumb) è un elenco ordinato con la pagina corrente indicata. Le caratteristiche tecniche sono tabelle vere, non riquadri impaginati.</p>
+      </div>
+      <div class="item">
+        <h3>Le lingue sono dichiarate e collegate</h3>
+        <p>Ogni pagina dichiara la sua lingua (<code>it-IT</code> o <code>en-US</code>). Le pagine tradotte indicano ai motori di ricerca dove trovare l'altra versione (<code>hreflang</code> italiano, inglese e predefinita).</p>
+        <p>Anche i testi alternativi delle immagini hanno la loro versione inglese: <strong>70 immagini</strong> sono già descritte nelle due lingue.</p>
+      </div>
+      <div class="item">
+        <h3>Immagini leggere e descritte</h3>
+        <p><strong>246 immagini su 257</strong> della libreria sono in formato WebP, alle dimensioni esatte in cui vengono mostrate. Quelle fuori schermo si caricano solo quando servono.</p>
+        <p>Il video della Home è passato da 19 a 4,7 MB (1,5 MB su telefono), la bottiglia da 2 MB a 227 KB. Ogni immagine ha un testo alternativo, oppure è segnata come decorativa: 549 descritte, 326 decorative, nessuna senza.</p>
+      </div>
+      <div class="item">
+        <h3>Nessuna dipendenza esterna superflua</h3>
+        <p>I caratteri tipografici sono serviti dal sito stesso, senza chiamate ai server di Google: le pagine sono più rapide e non trasmettono dati dei visitatori a terzi (GDPR).</p>
+        <p>La ricerca interna è costruita su misura. Raggruppa i risultati per tipo e trova "Riempitrici" anche se si scrive "riempitrice", con o senza accenti.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <h3>Il lavoro del referente SEO</h3>
+      <p>La configurazione SEO è affidata al referente SEO. Questo sviluppo gli consegna una base pulita su cui lavorare. Restano a lui:</p>
+      <ul>
+        <li>il titolo del sito;</li>
+        <li>il plugin Yoast (titoli, descrizioni e sitemap);</li>
+        <li>gli indirizzi inglesi definitivi;</li>
+        <li>l'apertura all'indicizzazione al lancio.</li>
+      </ul>
+      <p>Lo staging oggi è chiuso ai motori di ricerca di proposito, come deve essere un sito in costruzione.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="accessibilita">
+    <div class="sec-head">
+      <p class="kicker">Per le persone</p>
+      <h2 id="accessibilita">Accessibile nel codice, non con una toppa</h2>
+      <p>Molti siti affidano l'accessibilità a un widget che regola caratteri e contrasti. Un widget non rende conforme un sito. Per questo ogni pagina è stata costruita e verificata per funzionare con la tastiera, con i lettori di schermo, con lo zoom e sul telefono. Ecco cosa cambia per chi la usa.</p>
+    </div>
+    <div class="people">
+      <div class="person">
+        <p class="tag">Chi naviga con la tastiera</p>
+        <ul>
+          <li>Il collegamento "Vai al contenuto" è presente su tutte le 62 pagine ed è il primo elemento raggiunto con il tasto Tab.</li>
+          <li>Il menu con i sottomenu, il menu del telefono, i filtri, il carosello e i form si usano tutti senza mouse.</li>
+          <li>Il punto in cui ci si trova è sempre visibile, e non finisce mai sotto la testata fissa.</li>
+          <li>Nessun elemento nascosto riceve il focus.</li>
+        </ul>
+      </div>
+      <div class="person">
+        <p class="tag">Chi usa un lettore di schermo</p>
+        <ul>
+          <li>Titoli, aree della pagina e percorso di navigazione permettono di orientarsi subito.</li>
+          <li>Filtrando il catalogo, il lettore annuncia quante macchine restano (per esempio "10 macchine").</li>
+          <li>Icone decorative nascoste, immagini con testo alternativo in italiano e in inglese.</li>
+          <li>Ogni campo dei form ha la sua etichetta visibile, e i campi obbligatori sono segnalati anche ai lettori di schermo.</li>
+        </ul>
+      </div>
+      <div class="person">
+        <p class="tag">Chi ingrandisce o usa il telefono</p>
+        <ul>
+          <li>Con lo zoom al 200% nessun testo si taglia o si sovrappone (provato su 23 pagine).</li>
+          <li>Nessuno scroll orizzontale fino a 320 px di larghezza.</li>
+          <li>I menu a scorrimento delle categorie centrano la voce scelta, così si vedono anche la precedente e la successiva.</li>
+        </ul>
+      </div>
+      <div class="person">
+        <p class="tag">Chi vede poco o distingue male i colori</p>
+        <ul>
+          <li>Tutti i testi superano il contrasto minimo di 4,5:1. Sulle testate fotografiche il minimo misurato è 5,72:1.</li>
+          <li>Il colore non è mai l'unico segnale: i link nei testi dei form sono anche sottolineati.</li>
+          <li>I bordi dei campi dei form sono abbastanza scuri da distinguerli (3:1).</li>
+        </ul>
+      </div>
+      <div class="person">
+        <p class="tag">Chi è sensibile al movimento</p>
+        <ul>
+          <li>Il video della Home e il nastro dei loghi clienti hanno un pulsante di pausa.</li>
+          <li>Con l'impostazione "riduci movimento" del dispositivo il video non parte e animazioni ed effetti di profondità si fermano.</li>
+        </ul>
+      </div>
+      <div class="person">
+        <p class="tag">Tutti</p>
+        <ul>
+          <li>Ricerca interna con risultati raggruppati e un suggerimento se non trova nulla.</li>
+          <li>Pagina 404 e pagina di conferma dei form che riportano sempre a una strada utile.</li>
+          <li>Banner dei cookie che chiede la scelta prima di tutto il resto.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="gestione">
+    <div class="sec-head">
+      <p class="kicker">Per chi aggiorna il sito</p>
+      <h2 id="gestione">Facile da tenere in ordine</h2>
+      <p>Un sito resta pulito nel tempo solo se aggiornarlo non richiede di toccare la grafica. Abbiamo costruito ogni parte perché il cliente possa farlo in autonomia.</p>
+    </div>
+    <div class="grid2">
+      <div class="item">
+        <h3>Schede macchina da modulo</h3>
+        <p>Nome, settori, contenitori, capacità, caratteristiche, galleria e scheda tecnica si compilano in campi dedicati. I campi cambiano in base alla categoria: una tappatrice chiede dati diversi da una riempitrice.</p>
+      </div>
+      <div class="item">
+        <h3>Menu, clienti e cataloghi</h3>
+        <p>Le voci del menu si gestiscono da <strong>Aspetto → Menu</strong>. Loghi dei clienti e PDF dei cataloghi hanno ognuno una pagina di impostazioni. Un catalogo compare solo quando c'è il PDF.</p>
+      </div>
+      <div class="item">
+        <h3>Foto delle testate</h3>
+        <p>Ogni pagina, categoria e settore ha il suo campo "Immagine testata". La velatura scura che garantisce la leggibilità del testo si applica da sola a qualsiasi foto.</p>
+      </div>
+      <div class="item">
+        <h3>Un solo sistema grafico</h3>
+        <p>Colori, caratteri e misure sono definiti una volta (37 variabili) e richiamati da 241 stili condivisi. Una modifica al colore di base si propaga a tutto il sito.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="architettura">
+    <div class="sec-head">
+      <p class="kicker">Lato backend</p>
+      <h2 id="architettura">Come è costruito</h2>
+      <p>Sotto la grafica c'è un'architettura dati pensata per un catalogo industriale. Ci sono tipi di contenuto dedicati, classificazioni collegate tra loro, campi strutturati e template che si compongono da soli. Strutture e campi sono registrati con ACF Pro e si modificano dall'amministrazione. I file del tema non sono stati toccati.</p>
+      <div class="stack" aria-label="Tecnologie usate"><span>WordPress 7.1</span><span>PHP 8.4</span><span>Hello Elementor</span><span>Elementor Pro 4 · widget atomic</span><span>ACF Pro</span><span>WPML · String Translation · ACF Multilingual</span><span>FluentSnippets</span></div>
+    </div>
+
+    <h3>Il modello dei dati del catalogo</h3>
+    <div class="model" role="figure" aria-label="Modello dei dati: le classificazioni collegate alla macchina generano le pagine del sito">
+      <div class="col">
+        <p class="col-title">Classificazioni</p>
+        <div class="ent"><b>Categoria macchina</b><code>categoria_macchina · /categoria-macchina/…</code><span>6 categorie. Campi propri: titolo, claim, introduzione, ordine, invito finale, immagine della testata.</span></div>
+        <div class="ent"><b>Settore</b><code>settore · /settori/…</code><span>10 settori. Campi propri: introduzione, sfide del settore, ordine, immagine della card e della testata.</span></div>
+        <div class="ent"><b>Linea</b><code>linea · non pubblica</code><span>Eurostar o Squadron. Serve a raggruppare, non ha una pagina.</span></div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="col">
+        <p class="col-title">Tipo di contenuto</p>
+        <div class="ent core"><b>Macchina</b><code>macchina · /macchine/…</code><span>35 macchine: 21 Eurostar e 14 Squadron in un unico tipo di contenuto. Ogni macchina appartiene a una categoria e a una linea, e serve uno o più settori.</span><span>Ha una descrizione, una galleria, la scheda tecnica in PDF e dati diversi secondo la categoria: contenitori, capacità, valvole, tipo di tappo.</span></div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="col">
+        <p class="col-title">Pagine che si compongono da sole</p>
+        <ul class="out">
+          <li>Catalogo con filtro per categoria</li>
+          <li>Pagine delle 6 categorie</li>
+          <li>"Le nostre macchine" nei 10 settori</li>
+          <li>Pillole "Adatta per" nelle schede</li>
+          <li>Pagina Squadron con la gamma raggruppata</li>
+          <li>Macchine in evidenza in Home e risultati della ricerca</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Tipi di contenuto</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Contenuto</th><th scope="col">Nome tecnico e indirizzo</th><th scope="col">Quantità</th><th scope="col">Note</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Macchine</th><td><code>macchina</code> · /macchine/nome/</td><td class="num">35</td><td>Archivio = catalogo. Ordine manuale (campo Ordine). Le schede Squadron rimandano alla loro sezione nella pagina Squadron.</td></tr>
+            <tr><th scope="row">Posizioni di lavoro</th><td><code>posizione_lavoro</code> · /lavora-con-noi/nome/</td><td class="num">5</td><td>Scheda con template unico e candidatura con CV allegato.</td></tr>
+            <tr><th scope="row">News</th><td>articoli WordPress, 8 categorie</td><td class="num">16</td><td>La categoria "Casi studio" ha campi e template dedicati (cliente, macchine usate, citazione).</td></tr>
+            <tr><th scope="row">Pagine</th><td>pagine Elementor</td><td class="num">11</td><td>Home, Chi siamo, Settori, Servizi, Referenze, Squadron, News, Cataloghi, Lavora con noi, Contatti, Conferma.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Campi strutturati: 15 gruppi, 79 campi</h3>
+      <p>I campi compaiono solo dove servono. Spuntando la categoria "Riempitrici" su una macchina, ad esempio, compaiono i campi delle riempitrici.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Gruppo di campi</th><th scope="col">Dove compare</th><th scope="col">Campi</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Macchina, dati comuni</th><td>tutte le macchine</td><td class="num">6</td></tr>
+            <tr><th scope="row">Contenitori, Capacità, Riempitrici, Tappatrici, Movimentazione, Squadron</th><td>solo le macchine della categoria o della linea corrispondente</td><td class="num">9</td></tr>
+            <tr><th scope="row">Categoria macchina</th><td>ogni categoria</td><td class="num">10</td></tr>
+            <tr><th scope="row">Settore</th><td>ogni settore</td><td class="num">6</td></tr>
+            <tr><th scope="row">Immagine testata</th><td>pagine, categorie, settori e testata del catalogo</td><td class="num">1</td></tr>
+            <tr><th scope="row">Posizione di lavoro</th><td>ogni posizione, divisa in schede</td><td class="num">15</td></tr>
+            <tr><th scope="row">Articolo e Caso studio</th><td>news; i casi studio hanno campi in più</td><td class="num">15</td></tr>
+            <tr><th scope="row">Clienti</th><td>pagina di impostazioni: nome, logo e logo bianco per il nastro della Home (45 clienti)</td><td class="num">4</td></tr>
+            <tr><th scope="row">Cataloghi</th><td>pagina di impostazioni: PDF italiano e inglese per ogni catalogo</td><td class="num">13</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Template che si riempiono da soli</h3>
+      <p>Con 24 template (13 in italiano e 11 in inglese) si generano tutte le pagine dinamiche. Una nuova macchina, categoria, posizione o news ha subito la sua pagina, senza impaginare nulla.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">Template</th><th scope="col">Genera</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Header e footer</th><td>testata con mega-menu, ricerca e lingue; piè di pagina su tutte le pagine</td></tr>
+            <tr><th scope="row">Scheda macchina</th><td>le pagine delle 21 macchine Eurostar</td></tr>
+            <tr><th scope="row">Catalogo, Categoria, Settore</th><td>catalogo con filtro, 4 categorie con macchine, 10 settori</td></tr>
+            <tr><th scope="row">Linee complete, Macchine usate</th><td>le due categorie con contenuti propri</td></tr>
+            <tr><th scope="row">Scheda posizione</th><td>ogni posizione di lavoro</td></tr>
+            <tr><th scope="row">Articolo, Caso studio</th><td>le news nei due formati</td></tr>
+            <tr><th scope="row">Risultati di ricerca, Pagina 404</th><td>ricerca interna e pagina di errore</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Gli altri componenti</h3>
+      <div class="grid2">
+        <div class="item">
+          <h4>Codice su misura, separato dal tema</h4>
+          <p>Il codice su misura è in 6 snippet (circa 2.570 righe) e definisce <strong>55 shortcode</strong>. Gli shortcode leggono i campi e producono codice accessibile; impaginazione e grafica restano in Elementor, modificabili dall'editor. Il tema non è modificato, quindi resta aggiornabile.</p>
+        </div>
+        <div class="item">
+          <h4>Un sistema grafico centralizzato</h4>
+          <p>Il sito usa i widget di nuova generazione di Elementor 4. Colori, caratteri e misure sono <strong>37 variabili globali</strong>, richiamate da <strong>241 classi globali</strong> e da un solo foglio di stile del sito. Le larghezze di riferimento sono 767, 900, 1024 e 1200 px.</p>
+        </div>
+        <div class="item">
+          <h4>Multilingua integrato</h4>
+          <p>WPML con le versioni inglesi sotto <code>/en/</code>. Categorie e settori hanno nomi e indirizzi inglesi, e i menu sono 12 (6 per lingua). I testi scritti nel codice si traducono da String Translation, e ACF Multilingual collega i campi strutturati alle traduzioni.</p>
+        </div>
+        <div class="item">
+          <h4>Ricerca interna su misura</h4>
+          <p>Un indice per lingua comprende i campi delle macchine, i testi delle pagine Elementor, le news e le posizioni. Si aggiorna da solo quando si salva un contenuto. Ignora accenti, maiuscole e parole come articoli e preposizioni, e mostra i risultati raggruppati per tipo.</p>
+        </div>
+        <div class="item">
+          <h4>Form e richieste</h4>
+          <p>I form di contatto e di candidatura (con CV allegato) sono di Elementor Pro, con un controllo antispam invisibile. Ogni invio resta salvato nell'amministrazione e porta alla pagina di conferma. Il destinatario si cambia dalle impostazioni del form.</p>
+        </div>
+        <div class="item">
+          <h4>Ordine e manutenzione</h4>
+          <p>L'ordine di macchine, categorie e settori si decide con un campo numerico, senza toccare le pagine. I caratteri sono serviti in locale, gli indirizzi sono parlanti e WP-CLI funziona sul server. Prima di ogni modifica strutturale è stata salvata una copia di sicurezza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="lancio">
+    <div class="sec-head">
+      <p class="kicker">Prima del lancio</p>
+      <h2 id="lancio">Cosa manca</h2>
+      <p>Lo sviluppo è completo. Quello che manca sono soprattutto contenuti da ricevere e scelte da fare, non lavoro sul sito.</p>
+    </div>
+    <div class="todo">
+      <div>
+        <h3>Materiali dal cliente</h3>
+        <ul>
+          <li><span><strong>Video della Home</strong> definitivo (lo ha Ilaria).</span></li>
+          <li><span><strong>Loghi mancanti:</strong> MIB, Louisiana Spirits, Villa Bys, Birrificio Exit e quello ufficiale di Kuban Vino.</span></li>
+          <li><span><strong>Foto</strong> della testata Squadron, dell'officina e delle altre macchine Squadron e usate.</span></li>
+          <li><span><strong>PDF</strong> dei cataloghi e delle schede tecniche.</span></li>
+          <li><span><strong>Conferme</strong> su Neck Handling, Twist Rinser e l'elenco dei clienti in Referenze.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Testi</h3>
+        <ul>
+          <li><span><strong>Traduzioni inglesi</strong> di 20 schede macchina, di 9 settori e delle news (affidate a chi traduce).</span></li>
+          <li><span><strong>Privacy Policy:</strong> la pagina è ancora in bozza, quindi oggi il link nei form porta a una pagina non trovata.</span></li>
+          <li><span><strong>Posizioni di lavoro:</strong> le 5 attuali sono di esempio, da sostituire con quelle aperte al lancio.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Scelte e ultime verifiche</h3>
+        <ul>
+          <li><span><strong>Configurazione SEO</strong> e apertura ai motori di ricerca (referente SEO).</span></li>
+          <li><span><strong>Indirizzo email</strong> che riceve i form (oggi quello di prova dello staging).</span></li>
+          <li><span><strong>Prove con strumenti reali:</strong> scanner di accessibilità dall'amministrazione e lettore di schermo VoiceOver sulla scheda MEC LD.</span></li>
+          <li><span><strong>Widget di accessibilità Ally:</strong> decidere se mostrarlo al lancio. Il sito è accessibile anche senza.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="racconto">
+    <div class="sec-head">
+      <p class="kicker">Per la presentazione</p>
+      <h2 id="racconto">Il lavoro in quattro frasi</h2>
+      <p>Una traccia per raccontare il lavoro al cliente, in parole semplici.</p>
+    </div>
+    <div class="pitch">
+      <blockquote>Il sito è stato costruito per essere letto bene da tutti: da chi lo visita e da Google.<small>Struttura ordinata, indirizzi chiari, un solo titolo principale per pagina, lingue dichiarate e collegate.</small></blockquote>
+      <blockquote>L'accessibilità è nel codice, non in un'aggiunta.<small>Navigazione da tastiera, lettori di schermo, zoom e telefono verificati pagina per pagina secondo lo standard europeo WCAG 2.1 AA.</small></blockquote>
+      <blockquote>Ogni informazione si scrive una volta e compare ovunque serve.<small>Una macchina aggiornata si aggiorna nel catalogo, nella sua categoria, nei settori e nella ricerca. Niente pagine da allineare a mano.</small></blockquote>
+      <blockquote>È pronto a crescere senza perdere ordine.<small>Il cliente gestisce schede, menu, clienti, cataloghi e foto dall'amministrazione, senza toccare la grafica.</small></blockquote>
+    </div>
+  </section>
+
+  <section aria-labelledby="metodo">
+    <div class="sec-head">
+      <p class="kicker">Come abbiamo verificato</p>
+      <h2 id="metodo">Metodo</h2>
+    </div>
+    <div class="method">
+      <p><strong>Controllo automatico del 1 ottobre 2026:</strong> 62 indirizzi in italiano e inglese (tutte le pagine, tutte le categorie e i settori, 10 schede macchina, 4 news, le posizioni, ricerca e 404), aperti in un browser reale a 1440 px e a 375 px. Su ogni pagina: struttura dei titoli, aree della pagina, lingua, immagini, collegamenti tra lingue e regole WCAG 2.1 A e AA con lo strumento <code>axe-core</code> 4.10.</p>
+      <p><strong>Risultato:</strong> l'unica segnalazione emersa era un link nei form distinto solo dal colore. È stata corretta lo stesso giorno, e dopo la correzione il controllo non trova errori. Resta indicato solo il grande numero "404" della pagina di errore, che è decorativo, nascosto ai lettori di schermo ed esente dal criterio di contrasto.</p>
+      <p><strong>Gerarchia dei titoli:</strong> lo stesso giorno sono stati sistemati anche i titoli di Squadron e del catalogo, dove si passava dal titolo principale a titoli di terzo livello. Ora tutte le pagine analizzate hanno una gerarchia senza salti, e l'aspetto è rimasto identico al pixel.</p>
+      <p><strong>Prove del 30 settembre:</strong> confronto al pixel con il progetto grafico (24 pagine × 5 larghezze), navigazione da tastiera su 23 pagine e 29 prove di interazione, zoom al 200% su 23 pagine. Le correzioni emerse sono già applicate.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">Resoconto preparato da Mauro Mandalari · dati verificati sullo staging il 1 ottobre 2026</footer>
+</body>
+</html>
