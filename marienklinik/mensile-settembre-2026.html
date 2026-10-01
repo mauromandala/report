@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report mensile — Settembre</title>
+<style>
+  :root {
+    --bg: #091529; --surface: #0d1e35; --surface-2: #112544;
+    --ink: #ffffff; --ink-soft: #c8d4e8; --ink-faint: #8a9ab8;
+    --gold: #e6b253; --rule: rgba(200,212,232,0.14);
+    --ok: #7fc99b; --warn: #e6b253; --down: #e69a8a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink-soft);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300; font-size: 17px; line-height: 1.65;
+    max-width: 980px; margin: 0 auto; padding: 72px 32px 110px;
+  }
+  h1, h2, h3 { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  .masthead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 10px 24px; padding-bottom: 32px; margin-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark { font-weight: 800; letter-spacing: 0.08em; font-size: 19px; color: var(--ink); text-transform: uppercase; }
+  .wordmark .dot { color: var(--gold); margin: 0 8px; }
+  .wordmark .sub { color: var(--ink-faint); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+  .meta-date { color: var(--ink-faint); font-size: 16px; }
+  .kicker {
+    display: flex; align-items: center; gap: 12px; color: var(--gold);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.13em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .kicker::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  h1.title { font-size: 42px; margin-bottom: 14px; }
+  .intro { font-size: 22px; color: var(--ink-soft); margin-bottom: 52px; }
+
+  section.block { margin-bottom: 56px; }
+  .block-explainer {
+    font-size: 18px; color: var(--ink-soft); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px;
+  }
+  .block-explainer strong { color: var(--ink); }
+
+  .item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .item:last-child { border-bottom: none; }
+  .item .mark {
+    flex-shrink: 0; width: 27px; height: 27px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; margin-top: 2px;
+    background: rgba(127,201,155,0.16); color: var(--ok);
+  }
+  .item .mark.find { background: rgba(230,178,83,0.16); color: var(--warn); }
+  .item .body { flex: 1; }
+  .item .name { color: var(--ink); font-weight: 500; font-size: 19px; margin-bottom: 5px; }
+  .item .evidence { color: var(--ink-soft); font-size: 17px; }
+  .num { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .strong { color: var(--ink); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); margin: 22px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th { text-align: left; color: var(--ink-faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 13px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  td.good { color: var(--ok); font-weight: 500; }
+  td.down { color: var(--down); font-weight: 500; }
+  td.flat { color: var(--ink); font-weight: 500; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold); border-radius: 4px;
+    padding: 24px 28px; margin: 32px 0; font-size: 18px;
+  }
+  .callout strong { color: var(--ink); }
+  .callout ul { margin: 12px 0 0; padding-left: 22px; }
+  .callout li { margin-bottom: 8px; }
+
+  ul.next { font-size: 17px; line-height: 1.9; padding-left: 22px; }
+  ul.next strong { color: var(--ink); }
+
+  .closing { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--rule); }
+  .closing p { font-size: 19px; margin-bottom: 16px; }
+  .sign { margin-top: 48px; font-size: 17px; color: var(--ink-faint); }
+  .sign .name { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 640px) { h1.title { font-size: 30px; } .intro { font-size: 20px; } }
+</style>
+</head>
+<body>
+
+
+<div class="masthead">
+  <div class="wordmark">Mauro Mandalari<span class="dot">·</span><span class="sub">Marienklinik SEO</span></div>
+  <div class="meta-date">1 ottobre 2026</div>
+</div>
+
+<div class="kicker">Report mensile</div>
+<h1 class="title">Attività di settembre</h1>
+<p class="intro">Cosa è stato fatto sul sito questo mese, cosa è emerso durante i controlli e come stanno andando le cose.</p>
+
+<section class="block">
+  <div class="kicker">01 — Interventi eseguiti</div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Verificato che le pagine legali escluse a luglio siano davvero uscite da Google</div>
+      <div class="evidence">Ho controllato una per una le <span class="num">8</span> pagine (cookie, privacy, impressum, sitemap, in italiano e tedesco) con lo strumento ufficiale di Google. Tutte risultano escluse dai risultati di ricerca e Google le ha ripassate di recente, tra fine agosto e inizio settembre. Non è più solo un'impostazione: è confermato.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Controllati i vecchi indirizzi del sito precedente che Google continua a mostrare</div>
+      <div class="evidence">Ho passato in rassegna <span class="num">463</span> vecchi indirizzi che nell'ultimo anno e mezzo hanno ricevuto visualizzazioni su Google. <span class="num">337</span> funzionano già: portano alla pagina giusta. Il lavoro di redirect fatto in fase di migrazione regge. Per <span class="num">125</span> invece i visitatori trovavano un errore.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Corretti altri 23 link non funzionanti</div>
+      <div class="evidence">Schede di medici non più in organico, vecchi articoli di news e pagine di reparto con indirizzi dismessi ora portano alla scheda, al reparto o alla sezione giusta, invece di un errore. Ho verificato uno per uno che ciascun vecchio indirizzo arrivi a una pagina esistente, senza passaggi intermedi.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark">✓</div>
+    <div class="body">
+      <div class="name">Preparata la mappa dei collegamenti tra reparti affini</div>
+      <div class="evidence"><span class="num">18</span> coppie di reparti che si completano a vicenda, con la motivazione clinica di ciascuna, più la gestione dei servizi trasversali (radiologia, prelievi, anestesia). Il documento è stato inviato a Gabi; non tocco il sito finché non è approvato.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">02 — Cosa è emerso dai controlli</div>
+  <p class="block-explainer">Due cose che non erano state segnalate da nessuno perché <strong>non visibili senza controllare</strong>.</p>
+
+  <div class="item">
+    <div class="mark find">!</div>
+    <div class="body">
+      <div class="name">I vecchi PDF del sito precedente sono spariti, e Google li mostra ancora</div>
+      <div class="evidence">Quasi tutte le visite perse sugli indirizzi vecchi riguardano documenti PDF, non pagine: <span class="num">102</span> file, mostrati su Google circa <span class="num">60.900</span> volte in 16 mesi e cliccati <span class="num">1.495</span> volte. Chi cliccava trovava un errore. Il grosso viene da pochi documenti, tra cui l'opuscolo sugli infortuni in italiano (circa <span class="num">11.200</span> comparse), "Gesundheit ist die Kunst des Lebens" (<span class="num">8.700</span>), la Carta dei servizi (<span class="num">15.000</span> tra due versioni) e l'elenco delle prestazioni (<span class="num">5.900</span> tra due versioni). Sono posizionati bene, in media in prima pagina. Recuperarli dipende dall'avere ancora i file originali: vedi l'indicazione per Gabi più sotto.</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="mark find">!</div>
+    <div class="body">
+      <div class="name">Il registro degli errori si riempie di tentativi automatici, non di visitatori</div>
+      <div class="evidence">Ad agosto avevo portato il registro a <span class="num">1.000</span> voci, ma serve a poco: in sole 36 ore ne ha accumulate <span class="num">437</span>, e quasi tutte sono robot che provano indirizzi a caso (file di configurazione, pannelli di amministrazione) o richieste automatiche dei browser. I record di settembre non ci sono più: oggi il registro parte dal 29 settembre. Per capire cosa succede davvero uso Google Search Console, che copre mesi interi e mostra solo ciò che Google ha effettivamente cercato di raggiungere. Il registro resta come controllo di sicurezza, non come fonte per i report.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">03 — Come stanno andando le cose</div>
+  <p class="block-explainer">Confronto con lo stesso periodo dell'anno scorso, <strong>1–28 settembre</strong>: è l'unico modo corretto di leggere i numeri di un mese di rientro dalle ferie.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>1–28 settembre</th><th>2025</th><th>2026</th><th>Variazione</th></tr>
+      <tr><td>Visite da Google</td><td>7.496</td><td>7.545</td><td class="flat">+0,7% (stabile)</td></tr>
+      <tr><td>Quante volte il sito è comparso su Google</td><td>110.739</td><td>103.552</td><td class="down">−6,5%</td></tr>
+      <tr><td>Percentuale di clic</td><td>6,77%</td><td>7,29%</td><td class="good">+0,5 punti</td></tr>
+      <tr><td>Posizione media</td><td>9,4</td><td>6,5</td><td class="good">+2,9 posizioni</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size: 17px;">Il quadro è di <strong style="color: var(--ink)">stabilità</strong>: le visite sono praticamente identiche a un anno fa, anche se il sito compare un po' meno. Il miglioramento della posizione media è però maturato in gran parte prima del mio incarico (tra autunno 2025 e primavera 2026), quindi non lo considero un risultato di questi mesi.</p>
+
+  <p style="font-size: 17px;">Separando chi cerca il nome della clinica da chi cerca una prestazione senza conoscerla (il dettaglio vale per la quota di ricerche che Google rende visibile, circa il 40%):</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Ricerche, 1–28 settembre</th><th>Visite 2025</th><th>Visite 2026</th><th>Variazione</th></tr>
+      <tr><td>Con il nome della clinica</td><td>2.181</td><td>1.952</td><td class="down">−10,5%</td></tr>
+      <tr><td>Generiche (una prestazione, uno specialista)</td><td>1.016</td><td>950</td><td class="down">−6,5%</td></tr>
+    </table>
+  </div>
+
+  <p style="font-size: 17px;">Ad agosto le ricerche generiche erano in crescita del 6%: a settembre sono in leggero calo, con meno comparse (<span class="num">37.200</span> contro <span class="num">46.000</span>, circa −19%). Un mese solo non basta per parlare di tendenza. Lo tengo d'occhio e lo rileggo a ottobre, quando ci saranno anche i dati sui titoli riscritti.</p>
+
+  <div class="callout">
+    <strong>Sui titoli riscritti il 3 agosto è ancora presto.</strong> La finestra pulita di osservazione va dal 15 settembre al 15 ottobre, quindi la verifica con il confronto tra le 10 pagine modificate e quelle rimaste invariate arriva nel report di ottobre. Prima di allora qualunque lettura sarebbe rumore.
+  </div>
+</section>
+
+<section class="block">
+  <div class="kicker">04 — Cosa farò a ottobre</div>
+  <ul class="next">
+    <li><strong>Misurare l'effetto dei titoli riscritti</strong> a finestra chiusa (dopo il 15 ottobre), confrontando le 10 pagine modificate con quelle rimaste invariate</li>
+    <li><strong>Recuperare i PDF storici</strong> più visti, non appena sappiamo se i file originali esistono ancora (vedi sotto)</li>
+    <li><strong>Collegare i reparti affini</strong>, appena la mappa è approvata</li>
+    <li><strong>Rileggere le ricerche generiche</strong> a un secondo mese di dati, per capire se il calo di settembre è un episodio o un andamento</li>
+  </ul>
+</section>
+
+<section class="block">
+  <div class="kicker">Per Gabi — tre cose da chiarire</div>
+
+  <div class="callout">
+    <strong>1. I vecchi PDF.</strong> Hai ancora i file originali, o sa qualcuno in clinica dove si trovano? Mi servono soprattutto questi, in ordine di visibilità su Google:
+    <ul>
+      <li>L'opuscolo sugli infortuni in italiano (<em>Marienklinik Bozen Unfälle</em>) e la versione tedesca</li>
+      <li><em>Gesundheit ist die Kunst des Lebens</em></li>
+      <li>La Carta dei servizi (le due versioni: <em>Carta dei servizi</em> e <em>D.9 Carta dei servizi V11</em>)</li>
+      <li>L'elenco delle prestazioni (<em>Dienstleistungskartei</em>, anche qui le due versioni)</li>
+      <li>I comunicati stampa e il magazine <em>Dolomitenmagazin</em>, se esistono ancora</li>
+    </ul>
+    <p style="margin: 14px 0 0;">Se li abbiamo, li rimettiamo online e i vecchi indirizzi tornano a funzionare: recuperiamo visite che oggi vanno perse. Se non esistono più, li collego alla pagina del sito più vicina: recuperiamo meno, ma meglio di un errore. Per i documenti ormai superati (ad esempio vecchie edizioni di "Ein gutes Wort") puoi dirmi quali non servono più.</p>
+  </div>
+
+  <div class="callout">
+    <strong>2. Medici che non compaiono più sul sito.</strong> Per questi nomi non trovo una scheda: Alexander Romagna, Erich Luchner, Marco Rigamonti, Luca Incarbone, Andreas Holzer. Sono ancora in clinica? Se sì, ci sono schede da ripubblicare. Se non lavorano più con voi, va bene così e i vecchi link portano all'elenco degli specialisti.
+  </div>
+
+  <div class="callout">
+    <strong>3. L'intervento di chirurgia del seno (MIA).</strong> L'articolo del primo intervento minimamente invasivo è ancora molto cercato su Google ma non esiste più sul sito. A quale reparto fa capo (ginecologia, chirurgia generale)? Così lo collego alla pagina giusta. Il vecchio testo italiano parlava ancora di "clinica Santa Maria": se lo ripubblichi, conviene correggere il nome.
+  </div>
+</section>
+
+<div class="closing">
+  <p>Settembre è stato un mese di verifica e di pulizia: confermata la deindicizzazione delle pagine legali, sistemati 23 link rotti e individuato il punto in cui si perdono più visite, che sono i vecchi PDF.</p>
+</div>
+
+<div class="sign">
+  <div class="name">Mauro Mandalari</div>
+  <div>Consulenza SEO — Marienklinik Bozen</div>
+</div>
+
+</body>
+</html>
