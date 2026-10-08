@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Palette Build to Host</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Documento editoriale a colonna singola: le tre varianti in sequenza, poi la votazione. */
+:root{
+  --bg:#F7F6F2; --surface:#FFFFFF; --ink:#1E2321; --muted:#5C625F; --line:#DDDAD2; --accent:#16302A; --accent-ink:#FFFFFF; --soft:#EEEBE3;
+  --f-display:'League Spartan',system-ui,sans-serif; --f-body:'Work Sans',system-ui,sans-serif;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151816;--surface:#1D211F;--ink:#ECEAE4;--muted:#A9ADA7;--line:#343A36;--accent:#C9A464;--accent-ink:#16302A;--soft:#232825;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151816;--surface:#1D211F;--ink:#ECEAE4;--muted:#A9ADA7;--line:#343A36;--accent:#C9A464;--accent-ink:#16302A;--soft:#232825;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:56px 80px;display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(34px,6vw,52px);font-weight:600}
+h2{font-size:clamp(26px,4vw,34px);font-weight:600}
+h3{font-size:19px;font-weight:600}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--f-display);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.intro{display:flex;flex-direction:column;gap:18px}
+.intro .lead{font-size:19px;max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.fact{padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fact b{font-family:var(--f-display);font-weight:600}
+.pref{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:10px;background:var(--soft)}
+.pref .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:8px}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Variante */
+.variant{display:flex;flex-direction:column;gap:22px;padding-top:40px;border-top:1px solid var(--line)}
+.vhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px}
+.vnum{font-family:var(--f-display);font-size:15px;font-weight:600;color:var(--muted);letter-spacing:.06em}
+.tag{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.sw{display:flex;flex-direction:column;gap:6px;font-size:13px;min-width:0}
+.sw i{display:block;height:46px;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+.sw b{font-weight:600}
+.sw span{color:var(--muted);font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.col ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+
+/* Anteprima: colori fissi della variante, indipendenti dal tema della pagina */
+.mock{--m-bg:#fff;--m-surface:#fff;--m-ink:#111;--m-muted:#555;--m-dark:#111;--m-on-dark:#fff;--m-accent:#c90;--m-label:#555;--m-cta-bg:#111;--m-cta-ink:#fff;--m-line:#ddd;--m-radius:4px;
+  border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--m-bg);color:var(--m-ink);font-family:var(--f-body)}
+.m-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:var(--m-dark);flex-wrap:wrap}
+.m-logo{font-family:var(--f-display);font-weight:600;font-size:20px;color:var(--m-on-dark)}
+.m-logo em{font-style:normal;color:var(--m-accent)}
+.m-navlinks{display:flex;gap:18px;align-items:center;font-family:var(--f-display);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--m-on-dark)}
+.m-navlinks .hide-s{display:inline}
+.m-btn{display:inline-block;padding:10px 16px;border-radius:var(--m-radius);font-family:var(--f-display);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;text-decoration:none}
+.m-btn.accent{background:var(--m-accent);color:var(--m-dark)}
+.m-btn.solid{background:var(--m-cta-bg);color:var(--m-cta-ink)}
+.m-btn.ghost{border:1px solid var(--m-ink);color:var(--m-ink)}
+.m-hero{position:relative}
+.m-hero img{display:block;width:100%;aspect-ratio:1200/420;object-fit:cover}
+.m-card{margin:-56px auto 0;position:relative;width:min(560px,calc(100% - 32px));padding:22px 26px;background:var(--m-dark);color:var(--m-on-dark);text-align:center;border-radius:var(--m-radius);display:flex;flex-direction:column;gap:10px;align-items:center}
+.m-card .rule{width:40px;height:1px;background:var(--m-accent)}
+.m-card .q{font-family:var(--f-display);font-size:clamp(18px,3vw,24px);font-weight:300;line-height:1.25}
+.m-card .q strong{font-weight:600}
+.m-card .small{font-size:12px;opacity:.85}
+.m-body{padding:28px 24px 26px;display:flex;flex-direction:column;gap:14px}
+.m-eyebrow{font-family:var(--f-display);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--m-label)}
+.m-row{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.m-row img{width:150px;height:110px;object-fit:cover;border-radius:var(--m-radius);flex:none}
+.m-text{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.m-title{font-family:var(--f-display);font-size:22px;font-weight:500;color:var(--m-dark)}
+.m-abs{font-size:14px;line-height:1.55;color:var(--m-ink)}
+.m-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:4px}
+.m-facts div{font-size:13px}
+.m-facts b{display:block;font-family:var(--f-display);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--m-label)}
+.m-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--m-line)}
+
+.v05{--m-bg:#F6F2EA;--m-surface:#FBF9F4;--m-ink:#141210;--m-dark:#141210;--m-on-dark:#F6F2EA;--m-accent:#C9AE78;--m-label:#6B6358;--m-cta-bg:#141210;--m-cta-ink:#F6F2EA;--m-line:#E2DACB;--m-radius:2px}
+.v06{--m-bg:#F4EFE4;--m-surface:#FBF8F1;--m-ink:#1B2420;--m-dark:#16302A;--m-on-dark:#F4EFE4;--m-accent:#C9A464;--m-label:#7A5A25;--m-cta-bg:#16302A;--m-cta-ink:#F4EFE4;--m-line:#E1D8C5;--m-radius:4px}
+.v07{--m-bg:#EFE8E2;--m-surface:#F8F4F0;--m-ink:#2A1E20;--m-dark:#4E1A25;--m-on-dark:#F7F0EC;--m-accent:#D9B98A;--m-label:#7E3442;--m-cta-bg:#4E1A25;--m-cta-ink:#F7F0EC;--m-line:#E0D5CD;--m-radius:18px}
+.v05 .m-btn.accent{background:transparent;border:1px solid var(--m-accent);color:var(--m-accent)}
+
+
+/* Votazione */
+.vote{display:flex;flex-direction:column;gap:22px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+legend{font-family:var(--f-display);font-weight:600;font-size:17px;margin-bottom:6px;padding:0}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.choice{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;min-height:48px}
+.choice:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.choice input{accent-color:var(--accent);width:18px;height:18px;margin:0}
+.chip{flex:none;width:28px;height:28px;border-radius:6px;border:1px solid rgba(0,0,0,.1)}
+label.block{display:flex;flex-direction:column;gap:6px;font-weight:500}
+textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;min-height:96px;resize:vertical}
+.btnrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+a.primary,button.primary{font:600 15px var(--f-display);letter-spacing:.04em;padding:14px 22px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;min-height:48px}
+button.primary:disabled{opacity:.5;cursor:not-allowed}
+a.primary{display:inline-flex;align-items:center;text-decoration:none}
+.url{overflow-wrap:anywhere;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.status{font-size:14px;color:var(--muted)}
+.result{display:flex;flex-direction:column;gap:10px;padding:18px 20px;border-radius:10px;background:var(--soft)}
+.result-title{font-family:var(--f-display);font-weight:600;font-size:17px}
+.result-text{white-space:pre-wrap;overflow-wrap:anywhere}
+button.secondary{font:600 15px var(--f-display);letter-spacing:.04em;padding:12px 20px;border-radius:999px;border:1px solid var(--accent);background:transparent;color:var(--ink);cursor:pointer;min-height:44px}
+.notice{padding:14px 16px;border-radius:10px;background:var(--soft);font-size:15px}
+.results{display:flex;flex-direction:column;gap:14px}
+.bar{display:grid;grid-template-columns:150px 1fr 40px;gap:12px;align-items:center;font-size:15px}
+.bar .track{height:12px;border-radius:999px;background:var(--soft);overflow:hidden}
+.bar .fill{height:100%;border-radius:999px;transition:width .3s}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.votes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.votes li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.votes img{width:32px;height:32px;border-radius:50%;flex:none}
+.votes .who{font-weight:600}
+.votes .meta{font-size:13px;color:var(--muted)}
+.votes .c{font-size:15px;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.small{font-size:14px;color:var(--muted)}
+@media (max-width:560px){.m-navlinks .hide-s{display:none}.bar{grid-template-columns:110px 1fr 32px}}
+@media (prefers-reduced-motion:reduce){.bar .fill{transition:none}}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Build to Host · nuova identità colore del sito</div>
+    <h1>Scegliamo insieme la palette del sito</h1>
+    <p class="lead">Stiamo valutando un cambio dei colori di buildtohost.com in una direzione più vicina al mondo del lusso e dell'ospitalità di alto livello. Dopo diverse prove, Mauro e Diego hanno ristretto la scelta a tre varianti. Prima di decidere vogliamo il parere di tutto il team.</p>
+    <div class="facts">
+      <div class="fact"><b>Cosa cambia</b><span>Colori di sfondi, testi, pulsanti, menu e sezioni scure, su tutto il sito.</span></div>
+      <div class="fact"><b>Cosa resta uguale</b><span>Contenuti, impaginazione, fotografie e la struttura delle pagine.</span></div>
+      <div class="fact"><b>Cosa ti chiediamo</b><span>Di guardare le tre varianti, scegliere la preferita in fondo alla pagina e condividere la scelta nel gruppo.</span></div>
+    </div>
+    <div class="pref"><span class="dot" aria-hidden="true"></span><p>Per trasparenza: Mauro e Diego propendono per la <strong>06 · Verde bottiglia e ottone</strong>. Il vostro parere serve proprio a capire se il team la vede allo stesso modo o se un'altra variante convince di più.</p></div>
+    <p class="small">Perché un cambio: oggi il sito usa un teal scuro su grigi freddi, coerente con il logo ma poco distintivo. Le tre varianti si staccano volutamente dai colori del logo per comunicare cura, esclusività e affidabilità a proprietari e investitori. Tutte rispettano i contrasti minimi di leggibilità. Le tavole complete si possono vedere nel <a href="https://claude.ai/artifact/2675xu5v21rdmzTckH3BTE">canvas delle varianti</a>.</p>
+  </header>
+
+  <section class="variant" aria-labelledby="t05">
+    <div class="vhead"><span class="vnum">Variante 05</span><h2 id="t05">Nero e champagne</h2></div>
+    <p>Contrasto pieno tra un nero caldo e l'avorio, con lo champagne usato poco, come una luce: il filetto sotto i titoli, il pulsante del menu, i dettagli. Angoli vivi e testi maiuscoli spaziati.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#141210"></i><b>Nero caldo</b><span>#141210 · menu, sezioni scure, pulsanti</span></div>
+      <div class="sw"><i style="background:#F6F2EA"></i><b>Avorio</b><span>#F6F2EA · sfondo pagina</span></div>
+      <div class="sw"><i style="background:#C9AE78"></i><b>Champagne</b><span>#C9AE78 · accento su fondo scuro</span></div>
+      <div class="sw"><i style="background:#6B6358"></i><b>Grigio caldo</b><span>#6B6358 · etichette e testi secondari</span></div>
+    </div>
+    <div class="mock v05" role="img" aria-label="Anteprima della home nella variante Nero e champagne">
+      <div class="m-nav"><span class="m-logo">Build<em>to</em>Host</span><span class="m-navlinks"><span class="hide-s">I nostri lavori</span><span class="hide-s">Il nostro metodo</span><span class="m-btn accent">Fissa una consulenza</span></span></div>
+      <div class="m-hero"><img src="hero.webp" alt=""></div>
+      <div class="m-card"><span class="m-eyebrow" style="color:var(--m-accent)">Build to Host</span><div class="q">Vuoi avviare una <strong>struttura ricettiva</strong> con un <strong>ritorno sull'investimento garantito?</strong></div><span class="rule"></span><span class="small">Investitori privati, proprietari di immobili, imprenditori del turismo, fondi.</span></div>
+      <div class="m-body">
+        <span class="m-eyebrow">I nostri lavori</span>
+        <div class="m-row"><img src="stanze.webp" alt=""><div class="m-text"><div class="m-title">Le Stanze del Presidente</div><div class="m-abs">Il progetto riqualifica un immobile nel cuore storico di Carrù, tra Langhe e Alta Langa…</div><div class="m-facts"><div><b>Località</b>Carrù (CN)</div><div><b>Tipologia</b>Palazzo storico</div><div><b>Durata</b>36 mesi</div></div></div></div>
+        <div class="m-actions"><span class="m-btn ghost">Chiamaci</span><span class="m-btn solid">Fissa una consulenza</span></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="col"><h3>Punti di forza</h3><ul><li>La più elegante e "alta" delle tre: comunica esclusività a colpo d'occhio.</li><li>Fa risaltare molto le fotografie degli interventi.</li><li>Palette essenziale, facile da mantenere coerente.</li></ul></div>
+      <div class="col"><h3>Rischi</h3><ul><li>Può ricordare la moda o la gioielleria più che l'immobiliare.</li><li>Le ampie zone nere rendono il sito più freddo e meno accogliente.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="variant" aria-labelledby="t06">
+    <div class="vhead"><span class="vnum">Variante 06</span><h2 id="t06">Verde bottiglia e ottone</h2><span class="tag">Preferita da Mauro e Diego</span></div>
+    <p>Un verde profondo per menu, hero e sezioni scure, uno sfondo crema e dettagli in ottone. Richiama le dimore storiche, i club privati e l'hôtellerie classica italiana.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#16302A"></i><b>Verde bottiglia</b><span>#16302A · menu, sezioni scure, pulsanti</span></div>
+      <div class="sw"><i style="background:#F4EFE4"></i><b>Crema</b><span>#F4EFE4 · sfondo pagina</span></div>
+      <div class="sw"><i style="background:#C9A464"></i><b>Ottone</b><span>#C9A464 · accento su fondo scuro</span></div>
+      <div class="sw"><i style="background:#7A5A25"></i><b>Ottone brunito</b><span>#7A5A25 · etichette su fondo chiaro</span></div>
+    </div>
+    <div class="mock v06" role="img" aria-label="Anteprima della home nella variante Verde bottiglia e ottone">
+      <div class="m-nav"><span class="m-logo">Build<em>to</em>Host</span><span class="m-navlinks"><span class="hide-s">I nostri lavori</span><span class="hide-s">Il nostro metodo</span><span class="m-btn accent">Fissa una consulenza</span></span></div>
+      <div class="m-hero"><img src="hero.webp" alt=""></div>
+      <div class="m-card" style="border:1px solid var(--m-accent)"><span class="m-eyebrow" style="color:var(--m-accent)">Build to Host</span><div class="q">Vuoi avviare una <strong>struttura ricettiva</strong> con un <strong>ritorno sull'investimento garantito?</strong></div><span class="rule"></span><span class="small">Investitori privati, proprietari di immobili, imprenditori del turismo, fondi.</span></div>
+      <div class="m-body">
+        <span class="m-eyebrow">I nostri lavori</span>
+        <div class="m-row"><img src="stanze.webp" alt=""><div class="m-text"><div class="m-title">Le Stanze del Presidente</div><div class="m-abs">Il progetto riqualifica un immobile nel cuore storico di Carrù, tra Langhe e Alta Langa…</div><div class="m-facts"><div><b>Località</b>Carrù (CN)</div><div><b>Tipologia</b>Palazzo storico</div><div><b>Durata</b>36 mesi</div></div></div></div>
+        <div class="m-actions"><span class="m-btn ghost">Chiamaci</span><span class="m-btn solid">Fissa una consulenza</span></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="col"><h3>Punti di forza</h3><ul><li>Lusso sobrio e caldo, senza diventare freddo o modaiolo.</li><li>In sintonia con i nostri progetti: dimore e palazzi storici a Carrù, Casalbeltrame, Proceno.</li><li>La più lontana dall'idea di "sito tecnologico generico": parla di patrimonio e di cura.</li></ul></div>
+      <div class="col"><h3>Rischi</h3><ul><li>Il verde è un colore con carattere: va usato con misura per non appesantire le pagine.</li><li>Rispetto alla 05 è meno immediato come segnale di "lusso".</li></ul></div>
+    </div>
+  </section>
+
+  <section class="variant" aria-labelledby="t07">
+    <div class="vhead"><span class="vnum">Variante 07</span><h2 id="t07">Bordeaux e cipria</h2></div>
+    <p>Un bordeaux profondo con sfondi greige e rosa cipria, oro tenue come accento e angoli più morbidi. Un'atmosfera da boutique hotel di charme.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#4E1A25"></i><b>Bordeaux</b><span>#4E1A25 · titoli, sezioni scure, pulsanti</span></div>
+      <div class="sw"><i style="background:#EFE8E2"></i><b>Greige</b><span>#EFE8E2 · sfondo pagina</span></div>
+      <div class="sw"><i style="background:#E8D5CE"></i><b>Cipria</b><span>#E8D5CE · sezioni in evidenza</span></div>
+      <div class="sw"><i style="background:#D9B98A"></i><b>Oro tenue</b><span>#D9B98A · accento su fondo scuro</span></div>
+    </div>
+    <div class="mock v07" role="img" aria-label="Anteprima della home nella variante Bordeaux e cipria">
+      <div class="m-nav"><span class="m-logo">Build<em>to</em>Host</span><span class="m-navlinks"><span class="hide-s">I nostri lavori</span><span class="hide-s">Il nostro metodo</span><span class="m-btn accent">Fissa una consulenza</span></span></div>
+      <div class="m-hero"><img src="hero.webp" alt=""></div>
+      <div class="m-card"><span class="m-eyebrow" style="color:var(--m-accent)">Build to Host</span><div class="q">Vuoi avviare una <strong>struttura ricettiva</strong> con un <strong>ritorno sull'investimento garantito?</strong></div><span class="rule"></span><span class="small">Investitori privati, proprietari di immobili, imprenditori del turismo, fondi.</span></div>
+      <div class="m-body">
+        <span class="m-eyebrow">I nostri lavori</span>
+        <div class="m-row"><img src="stanze.webp" alt=""><div class="m-text"><div class="m-title">Le Stanze del Presidente</div><div class="m-abs">Il progetto riqualifica un immobile nel cuore storico di Carrù, tra Langhe e Alta Langa…</div><div class="m-facts"><div><b>Località</b>Carrù (CN)</div><div><b>Tipologia</b>Palazzo storico</div><div><b>Durata</b>36 mesi</div></div></div></div>
+        <div class="m-actions"><span class="m-btn ghost">Chiamaci</span><span class="m-btn solid">Fissa una consulenza</span></div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="col"><h3>Punti di forza</h3><ul><li>La più calda e accogliente: fa pensare subito all'ospitalità.</li><li>Distintiva: pochi competitor nel nostro settore usano questi toni.</li></ul></div>
+      <div class="col"><h3>Rischi</h3><ul><li>Più romantica che professionale: parla meglio a piccole strutture che a investitori e fondi.</li><li>Il bordeaux può risultare datato se non bilanciato con molto bianco e greige.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="variant" aria-labelledby="tvote" id="voto">
+    <div class="vhead"><span class="vnum">Il tuo parere</span><h2 id="tvote">Vota la variante che preferisci</h2></div>
+    <form class="vote" id="voteForm" novalidate>
+      <fieldset>
+        <legend>Quale palette preferisci?</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="variante" id="v-05" value="05 · Nero e champagne"><span class="chip" style="background:linear-gradient(90deg,#141210 50%,#C9AE78 50%)" aria-hidden="true"></span>05 · Nero e champagne</label>
+          <label class="choice"><input type="radio" name="variante" id="v-06" value="06 · Verde bottiglia e ottone"><span class="chip" style="background:linear-gradient(90deg,#16302A 50%,#C9A464 50%)" aria-hidden="true"></span>06 · Verde e ottone</label>
+          <label class="choice"><input type="radio" name="variante" id="v-07" value="07 · Bordeaux e cipria"><span class="chip" style="background:linear-gradient(90deg,#4E1A25 50%,#E8D5CE 50%)" aria-hidden="true"></span>07 · Bordeaux e cipria</label>
+        </div>
+      </fieldset>
+      <label class="block" for="commento">Commento (facoltativo)
+        <textarea id="commento" name="commento" maxlength="1200" placeholder="Cosa ti convince o ti lascia perplesso?"></textarea>
+      </label>
+      <div class="btnrow"><button type="submit" class="primary" id="sendBtn">Conferma la scelta</button><span class="status" id="status" role="status"></span></div>
+      <div class="result" id="result" hidden>
+        <p class="result-title">La tua scelta</p>
+        <p class="result-text" id="resultText"></p>
+        <div class="btnrow"><button type="button" class="secondary" id="copyBtn">Copia per il gruppo</button><span class="status" id="copyStatus" role="status"></span></div>
+      </div>
+      <p class="small">La scelta non viene salvata: copiala e incollala nel gruppo, così la vedono tutti.</p>
+    </form>
+  </section>
+</main>
+
+
+<script>
+(function(){
+  var form=document.getElementById('voteForm'), status=document.getElementById('status');
+  var result=document.getElementById('result'), text=document.getElementById('resultText');
+  var copyBtn=document.getElementById('copyBtn'), copyStatus=document.getElementById('copyStatus');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var scelta=form.querySelector('input[name="variante"]:checked');
+    if(!scelta){status.textContent='Scegli una delle tre varianti.';result.hidden=true;return;}
+    var commento=document.getElementById('commento').value.trim();
+    text.textContent='Palette preferita: '+scelta.value+(commento?'\nCommento: '+commento:'');
+    status.textContent=''; copyStatus.textContent=''; result.hidden=false;
+  });
+  copyBtn.addEventListener('click',function(){
+    var t=text.textContent;
+    function fallback(){var r=document.createRange();r.selectNodeContents(text);var s=window.getSelection();s.removeAllRanges();s.addRange(r);copyStatus.textContent='Testo selezionato: copialo con Ctrl+C o Cmd+C.';}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){copyStatus.textContent='Copiato. Ora incollalo nel gruppo.';},fallback);}else{fallback();}
+  });
+})();
+</script>
+</body>
+</html>
