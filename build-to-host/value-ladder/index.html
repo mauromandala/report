@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scala di valore Build to Host</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Documento editoriale a colonna singola. Token ripresi dalla pagina Palette Build to Host. */
+:root{
+  --bg:#F7F6F2; --surface:#FFFFFF; --ink:#1E2321; --muted:#5C625F; --line:#DDDAD2; --accent:#16302A; --accent-ink:#FFFFFF; --soft:#EEEBE3;
+  --brass-ink:#7A5A25; --brass-bg:#F3EBDC;
+  --f-display:'League Spartan',system-ui,sans-serif; --f-body:'Work Sans',system-ui,sans-serif;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151816;--surface:#1D211F;--ink:#ECEAE4;--muted:#A9ADA7;--line:#343A36;--accent:#C9A464;--accent-ink:#16302A;--soft:#232825;--brass-ink:#C9A464;--brass-bg:#2B2619;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151816;--surface:#1D211F;--ink:#ECEAE4;--muted:#A9ADA7;--line:#343A36;--accent:#C9A464;--accent-ink:#16302A;--soft:#232825;--brass-ink:#C9A464;--brass-bg:#2B2619;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:20px}
+.wrap{max-width:900px;margin:0 auto;padding-block:56px 80px;display:flex;flex-direction:column;gap:64px}
+section{display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(34px,6vw,52px);font-weight:600}
+h2{font-size:clamp(26px,4vw,34px);font-weight:600}
+h3{font-size:19px;font-weight:600}
+p,ul,ol{margin:0}
+ul,ol{padding-left:1.25em;display:flex;flex-direction:column;gap:8px}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:var(--f-display);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.lead{font-size:19px;max-width:62ch}
+.muted{color:var(--muted)}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+strong{font-weight:600}
+
+/* Intestazione */
+.intro{display:flex;flex-direction:column;gap:18px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+
+/* Etichette di stato */
+.chip{display:inline-block;font-family:var(--f-display);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px 2px;border-radius:999px;white-space:nowrap;line-height:1.5}
+.chip.deciso{background:var(--accent);color:var(--accent-ink)}
+.chip.ipotesi{background:var(--brass-bg);color:var(--brass-ink)}
+.chip.proposta{background:var(--soft);color:var(--ink)}
+.chip.dopo{background:transparent;color:var(--muted);border:1px solid var(--line)}
+
+/* Sintesi */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.fact{padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fact .num{font-family:var(--f-display);font-size:26px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+
+/* Domande */
+.questions{counter-reset:q;list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.questions li{counter-increment:q;padding:16px 18px 16px 52px;background:var(--soft);border-radius:10px;position:relative}
+.questions li::before{content:counter(q);position:absolute;left:18px;top:14px;font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--accent)}
+
+/* Tabelle */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:640px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--f-display);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:var(--soft)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td strong{font-family:var(--f-display);font-size:16px}
+.small-table table{min-width:420px}
+
+/* Riquadri */
+.note{padding:18px 20px;border-radius:10px;background:var(--soft);display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.warn{padding:18px 20px;border-radius:10px;border:1px solid var(--brass-ink);background:var(--brass-bg);color:var(--ink);display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.warn b,.note b{font-family:var(--f-display);font-weight:600}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.pick article{padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;display:flex;flex-direction:column;gap:10px}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.phases article{padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:8px}
+
+/* Decisioni */
+.decisions{list-style:none;padding:0;gap:0;border-top:1px solid var(--line)}
+.decisions li{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.decisions time{font-family:var(--f-display);font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+
+footer{display:flex;flex-direction:column;gap:14px;font-size:15px;color:var(--muted);border-top:1px solid var(--line);padding-top:24px}
+footer ol{gap:6px}
+
+@media (max-width:560px){
+  .wrap{gap:48px;padding-block:40px 64px}
+  .decisions li{grid-template-columns:1fr;gap:2px}
+  .questions li{padding-left:46px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="intro">
+    <p class="eyebrow">Build to Host · Bozza per la discussione interna · 19 novembre 2026</p>
+    <h1>La scala di valore di Build to Host</h1>
+    <p class="lead">Come guadagna Build to Host gradino per gradino: cosa è già deciso, cosa è ancora un'ipotesi e da quali due mosse partire per fare cassa. Serve a decidere insieme prima di portarla nel repository e nello sviluppo del CRM.</p>
+    <div class="legend">
+      <span class="chip deciso">Deciso</span>
+      <span class="chip ipotesi">Ipotesi</span>
+      <span class="chip proposta">Proposta</span>
+      <span class="chip dopo">Più avanti</span>
+      <span>Ogni cifra di questa pagina è un'ipotesi di lavoro, salvo dove è segnata come decisa.</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="sintesi">
+    <h2 id="sintesi">In sintesi</h2>
+    <div class="facts">
+      <div class="fact"><span class="eyebrow">Il motore del fatturato</span><span class="num">240–600k €</span><span>l'anno di compenso sui progetti, con 3-4 cantieri da 800.000 € a 1,5 milioni.</span></div>
+      <div class="fact"><span class="eyebrow">La cassa veloce</span><span class="num">3.500–8.000 €</span><span>lo studio di fattibilità: incassa in settimane e seleziona i clienti per il progetto.</span></div>
+      <div class="fact"><span class="eyebrow">Da dove partire</span><span class="num">2 mosse</span><span>il modulo bandi venduto da solo e lo studio pagato tutto all'ordine.</span></div>
+      <div class="fact"><span class="eyebrow">Il nodo da sciogliere</span><span class="num">Listini</span><span>dei consulenti: decidono il margine sia sui progetti sia sugli studi.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="domande">
+    <h2 id="domande">Le domande da chiudere insieme</h2>
+    <ol class="questions">
+      <li><strong>Listini dei consulenti.</strong> Senza, non si sa quanto vale il ricarico sui progetti né quanto resta su uno studio fatto a mano.</li>
+      <li><strong>Il bando da agganciare.</strong> Quale bando aperto in Veneto o Friuli Venezia Giulia per il primo modulo bandi, con quale prezzo fisso e quale quota sul contributo.</li>
+      <li><strong>Lavori edili.</strong> Build to Host li fattura anche, come general contractor, o solo compenso e consulenti? Cambia rischio e fabbisogno di cassa.</li>
+      <li><strong>Il ticket.</strong> Cantieri tra 800.000 € e 1,5 milioni, in media intorno a 1,5 milioni, o anche oltre i 3,5 milioni come fa pensare la soglia del compenso?</li>
+      <li><strong>Lo studio.</strong> Quali moduli copre il range 3.500–8.000 €, e quanto costa ciascun modulo venduto da solo.</li>
+      <li><strong>Il modulo del CRM.</strong> Quando sarà pronto il software dello studio: da quel giorno il margine dello studio cambia di ordine di grandezza.</li>
+      <li><strong>La gestione.</strong> Diventa un gradino a pagamento, direttamente o con un gestore partner?</li>
+      <li><strong>L'obiettivo.</strong> Un fatturato o un margine annuo di riferimento, per sapere quanti progetti e quanti studi servono davvero.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="gradini">
+    <h2 id="gradini">I quattro gradini</h2>
+    <p class="prose muted">La scala decisa il 15 novembre. Il tetto dei 3-4 l'anno vale solo per la direzione del cantiere: i moduli fatti dai consulenti esterni ne restano fuori.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gradino</th><th>Offerta</th><th>Prezzo</th><th>Quando arriva la cassa</th><th>Chi lavora</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · Semaforo</strong><br><span class="chip deciso">Deciso</span></td><td>Verde o rosso: l'immobile può diventare una struttura che rende? È l'evoluzione del preventivatore già online.</td><td>Gratuito</td><td>Mai: è il filtro</td><td>Il software</td></tr>
+          <tr><td><strong>2 · Studio di fattibilità</strong><br><span class="chip ipotesi">Prezzo in ipotesi</span></td><td>Un modulo per fase: verifiche urbanistiche, analisi HBU, business plan in tre scenari, finanza agevolata. Acquistabile anche per moduli.</td><td>3.500–8.000 €</td><td>In settimane</td><td>Consulenti esterni, fuori dal tetto dei 3-4</td></tr>
+          <tr><td><strong>3 · Progetto chiavi in mano</strong><br><span class="chip deciso">Deciso</span></td><td>Cantiere, setup digitale e avviamento.</td><td>10% sui primi 3,5 milioni di lavori + 5% sull'eccedenza, più un ricarico medio del 10% sui consulenti</td><td>Durante il cantiere, secondo tranche ancora da definire</td><td>Squadra e consulenti a progetto. Tetto: 3-4 cantieri l'anno</td></tr>
+          <tr><td><strong>4 · Piattaforma ospiti</strong><br><span class="chip ipotesi">Importi da definire</span></td><td>Prenotazione diretta, check-in, dati. Per le nostre strutture e, in modo selettivo, per strutture simili.</td><td>Canone + revenue share</td><td>Dopo l'apertura delle strutture</td><td>Il software</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="compenso">
+    <h2 id="compenso">Il compenso del progetto <span class="chip deciso">Deciso il 18/11</span></h2>
+    <div class="prose">
+      <p>Il compenso è <strong>a scaglioni</strong>: il 10% sui primi 3,5 milioni di lavori di ogni progetto, il 5% solo sulla parte che eccede. Così cresce sempre con il progetto, senza salti alla soglia.</p>
+    </div>
+    <div class="table-wrap small-table">
+      <table>
+        <thead><tr><th>Valore dei lavori</th><th class="n">Compenso</th><th class="n">Percentuale effettiva</th></tr></thead>
+        <tbody>
+          <tr><td>800.000 €</td><td class="n">80.000 €</td><td class="n">10%</td></tr>
+          <tr><td>1,5 milioni</td><td class="n">150.000 €</td><td class="n">10%</td></tr>
+          <tr><td>3,5 milioni</td><td class="n">350.000 €</td><td class="n">10%</td></tr>
+          <tr><td>3,6 milioni</td><td class="n">355.000 €</td><td class="n">9,9%</td></tr>
+          <tr><td>5 milioni</td><td class="n">425.000 €</td><td class="n">8,5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p class="muted">Scartata la lettura "5% su tutto il progetto oltre i 3,5 milioni": un progetto da 3,6 milioni avrebbe reso 180.000 €, meno di uno da 3,4 milioni.</p>
+      <p><strong>I consulenti.</strong> Non c'è una squadra a costo fisso: i consulenti lavorano a progetto secondo il proprio listino e <strong>fattura sempre Build to Host</strong>, con un ricarico medio del 10%. Il loro costo lo paga il cliente e non esce dal compenso: il ricarico è margine in più. Senza costi fissi, il costo cresce solo quando cresce il lavoro.</p>
+    </div>
+    <div class="warn">
+      <b>Da gestire prima del primo progetto</b>
+      <p>Fatturando i consulenti, Build to Host si prende il rischio di incasso e i tempi di pagamento. Se i consulenti vanno pagati prima che il cliente paghi, è Build to Host a finanziarli. Servono termini scritti: anticipo alla firma, tranche sugli stati di avanzamento lavori, consulenti pagati dopo l'incasso.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="soldi">
+    <h2 id="soldi">Dove stanno i soldi</h2>
+    <div class="prose">
+      <p><strong>Il progetto decide tutto.</strong> Con cantieri tra 800.000 € e 1,5 milioni ogni progetto sta sotto la soglia dei 3,5 milioni: il compenso è <strong>80.000–150.000 € a progetto</strong>, cioè <strong>240.000–600.000 € l'anno</strong> con 3-4 cantieri.</p>
+      <p><strong>Lo studio è cassa veloce, non il grosso del fatturato.</strong> Per pareggiare il minimo del progetto (240.000 €) servirebbero:</p>
+    </div>
+    <div class="table-wrap small-table">
+      <table>
+        <thead><tr><th>Prezzo dello studio</th><th class="n">Studi necessari</th><th class="n">Con il 20% ai partner</th></tr></thead>
+        <tbody>
+          <tr><td>3.500 €</td><td class="n">~69</td><td class="n">~86</td></tr>
+          <tr><td>5.000 €</td><td class="n">48</td><td class="n">60</td></tr>
+          <tr><td>8.000 €</td><td class="n">30</td><td class="n">~38</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">Lo studio resta quindi cassa veloce, filtro dei clienti e fonte di deal verificati. Il suo margine dipende dal <strong>motore di calcolo</strong>, che sarà sviluppato come modulo del CRM.</p>
+    <div class="phases">
+      <article>
+        <span class="chip proposta">Adesso</span>
+        <h3>Fase manuale</h3>
+        <p>Ogni studio è una consulenza vera, fatta da consulenti esterni. Il prezzo deve coprire le ore reali, i volumi dipendono da quanti consulenti sono disponibili, e il margine dai loro listini. I primi studi sono la specifica del modulo: coefficienti, scenari e struttura del documento vanno registrati per trasferirli nel software.</p>
+      </article>
+      <article>
+        <span class="chip dopo">Con il modulo pronto</span>
+        <h3>Fase automatizzata</h3>
+        <p>Il software prepara la bozza, il professionista valida e firma in circa 1-2 ore a studio (ipotesi). Il margine dello studio cambia di ordine di grandezza.</p>
+      </article>
+    </div>
+    <p class="prose"><strong>La piattaforma ospiti paga tardi e cresce piano:</strong> arriva solo dopo l'apertura, al ritmo di 3-4 strutture l'anno. Non dà cassa nel breve, ma è l'unica entrata che si accumula nel tempo.</p>
+  </section>
+
+  <section aria-labelledby="tripwire">
+    <h2 id="tripwire">Lo studio è già il primo acquisto giusto</h2>
+    <div class="prose">
+      <p>Nel metodo di Luca Mastella (Learnn) la prima offerta a pagamento, il <em>tripwire</em>, vale tra il 2% e il 10% dell'offerta principale, misurato sul proprio mercato e non in assoluto <a href="#fonti">[2]</a>.</p>
+      <p>Sui nostri numeri: il compenso di un progetto vale 80.000–150.000 €, quindi la fascia giusta è <strong>1.600–15.000 €</strong>. Lo studio, a 3.500–8.000 €, ci sta dentro. Per questo non serve stravolgere la scala: per "diluirla" basta aggiungere qualcosa di più piccolo prima dello studio. Con la stessa regola, su uno studio da 5.000 € vale 100-500 €, e a quel prezzo deve costare quasi zero ore: nella fase manuale nessun modulo ci rientra.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="varianti">
+    <h2 id="varianti">Varianti per fare cassa</h2>
+    <p class="prose muted">Ogni variante è misurata su tre cose: quando arriva la cassa, le ore di chi consuma, e se rischia di anticipare i numeri dello studio (il semaforo gratuito dice se conviene, non quanto rende).</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variante</th><th>Quando arriva la cassa</th><th>Ore di chi</th><th>Anticipa i numeri dello studio?</th><th>Stato</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A · Studio pagato tutto all'ordine</strong>, poi scalato dal compenso se il cliente prosegue</td><td>All'ordine</td><td>Nessuna in più</td><td>No</td><td><span class="chip deciso">Si parte</span></td></tr>
+          <tr><td><strong>B · Moduli venduti singolarmente</strong>, partendo dal modulo bandi (ammissibilità e pratica)</td><td>In settimane</td><td>Consulenti esterni, fuori dal tetto</td><td>No: dice se si accede al contributo, non quanto rende</td><td><span class="chip deciso">Si parte</span></td></tr>
+          <tr><td><strong>C · Call a pagamento</strong>, con prezzo scritto e pagamento prima della call</td><td>Subito, ma poca</td><td>Diego, un'ora</td><td>Sì, se nella call si danno stime</td><td><span class="chip dopo">Esclusa ora</span></td></tr>
+          <tr><td><strong>D · Prenotazione di uno slot di cantiere</strong> con acconto, scalato dal compenso</td><td>Mesi prima del cantiere</td><td>Nessuna</td><td>No</td><td><span class="chip dopo">Più avanti</span></td></tr>
+          <tr><td><strong>E · Manutenzione prima della stagione</strong>, venduta una tantum per più anni alla consegna, fatta da un partner</td><td>Anticipata, alla consegna</td><td>Del partner</td><td>No</td><td><span class="chip dopo">Più avanti</span></td></tr>
+          <tr><td><strong>F · Gestione ricorrente</strong></td><td>Dopo l'apertura, ogni mese</td><td>Gestore o partner</td><td>No</td><td><span class="chip dopo">Più avanti</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Perché si parte da A e B</h3>
+    <p class="prose">La scala non si costruisce tutta il primo giorno: prima l'offerta principale, poi quella successiva, poi il primo acquisto e solo dopo le entrate ricorrenti <a href="#fonti">[1]</a>. Senza ancora una vendita, sei offerte insieme disperderebbero la squadra.</p>
+    <div class="pick">
+      <article>
+        <span class="eyebrow">Variante B</span>
+        <h3>Il modulo bandi venduto da solo</h3>
+        <p>È la cassa più rapida: la scadenza del bando crea urgenza da sola. Si aggancia a un bando aperto in Veneto o Friuli Venezia Giulia, ed è lo stesso aggancio usato con i professionisti, quindi canale e offerta si parlano. Il prezzo è ibrido: una parte fissa subito e una legata al contributo ottenuto, il modello adatto quando il valore cambia molto da cliente a cliente <a href="#fonti">[5]</a>. Lo fanno consulenti esterni, quindi può crescere oltre i 3-4 cantieri.</p>
+      </article>
+      <article>
+        <span class="eyebrow">Variante A</span>
+        <h3>Lo studio pagato tutto all'ordine</h3>
+        <p>Non c'è niente da costruire: cambia solo il momento dell'incasso. È la logica del consulting funnel, in cui chi arriva al lavoro ha già pagato e non resta nessuna trattativa da rincorrere <a href="#fonti">[3]</a>. Se il cliente prosegue, il prezzo dello studio si scala dal compenso del progetto, che vale da 10 a 40 volte tanto.</p>
+      </article>
+    </div>
+    <div class="note">
+      <b>La call resta gratuita per tutti</b>
+      <p>In questa fase l'obiettivo è portare il prima possibile contatti qualificati in call con Diego: farla pagare andrebbe nella direzione opposta. Quando i volumi cresceranno si potrà riprendere un'opzione intermedia: gratuita per chi ha semaforo verde e capitale sopra soglia, a pagamento per gli altri.</p>
+    </div>
+    <p class="prose muted">D, E ed F restano per dopo. La prenotazione dello slot funziona solo quando le richieste superano i posti disponibili. Manutenzione e gestione vengono dopo la prima struttura consegnata, ma vanno progettate già adesso: la manutenzione pluriennale pagata alla consegna anticipa cassa che altrimenti arriverebbe diluita negli anni <a href="#fonti">[4]</a>.</p>
+  </section>
+
+  <section aria-labelledby="ipotesi">
+    <h2 id="ipotesi">Le ipotesi dietro lo studio di fattibilità <span class="chip ipotesi">Da validare</span></h2>
+    <div class="prose">
+      <p><strong>Cosa compra il cliente.</strong> Non un report, ma la riduzione del rischio della sua operazione: costi, tempi e redditività verificati prima degli iter autorizzativi e prima di chiedere un mutuo. Il prezzo ipotizzato è meno dell'1% del valore del cantiere.</p>
+    </div>
+    <div class="warn">
+      <b>Regola per i testi rivolti ai clienti</b>
+      <p>Si scrive "ridurre il rischio prima di impegnare capitale", mai "certezza". Lo studio lavora su tre scenari proprio perché il risultato non è certo, e non si promettono rendimenti.</p>
+    </div>
+    <ul class="prose">
+      <li><strong>Il motore di calcolo</strong> sarà sviluppato come modulo del CRM <span class="chip deciso">Deciso</span>. Dai dati dell'immobile genera un business plan in tre scenari (base, upside, downside): costi di ristrutturazione e avviamento, costi operativi, ricavo per camera, punto di pareggio e tempo di rientro. Oggi non è operativo e nessun testo deve presentarlo come tale.</li>
+      <li><strong>La validazione umana:</strong> il software fa il calcolo, il professionista della fase valida i coefficienti e firma il documento, in circa 1-2 ore a pratica. È ciò che giustifica un prezzo alto senza creare colli di bottiglia sui fondatori.</li>
+      <li><strong>La quota ai partner che segnalano:</strong> 15-20% del prezzo dello studio, come ipotesi. È legata alla verifica deontologica ancora aperta per notai, avvocati, private banker e consulenti finanziari: finché non è chiusa, nei materiali rivolti ai partner vale "niente compensi, partnership".</li>
+    </ul>
+    <div class="note">
+      <b>Una conseguenza da verificare</b>
+      <p>Le fasce di capitale del preventivatore (fino a 100.000 €, 100-300.000, 300-600.000, oltre 600.000) non distinguono nulla nella fascia che conta: un cantiere da 800.000 € a 1,5 milioni finisce tutto in "oltre 600.000 €".</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="verificare">
+    <h2 id="verificare">Da verificare prima di vendere</h2>
+    <ul class="prose">
+      <li><strong>Quota ai partner,</strong> anche sui gradini nuovi: subordinata alla verifica deontologica.</li>
+      <li><strong>Compenso per trovare l'immobile all'investitore:</strong> potrebbe ricadere nella mediazione immobiliare, attività regolamentata.</li>
+      <li><strong>Compenso legato al contributo ottenuto sui bandi:</strong> prassi e limiti.</li>
+      <li><strong>Acconti e caparre</strong> per la prenotazione dello slot: forma contrattuale.</li>
+      <li><strong>Vendita online a privati</strong> di moduli pagati sul sito: regole del codice del consumo, compreso il diritto di recesso.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="deciso">
+    <h2 id="deciso">Già deciso</h2>
+    <ul class="decisions">
+      <li><time datetime="2026-11-15">15/11</time><span>Scala in quattro gradini: semaforo gratuito, studio di fattibilità, progetto chiavi in mano, piattaforma ospiti.</span></li>
+      <li><time datetime="2026-11-18">18/11</time><span>Compenso del progetto a scaglioni: 10% sui primi 3,5 milioni, 5% sull'eccedenza.</span></li>
+      <li><time datetime="2026-11-18">18/11</time><span>Consulenti a progetto, fatturati sempre da Build to Host con ricarico medio del 10%.</span></li>
+      <li><time datetime="2026-11-18">18/11</time><span>CRM proprietario. Il software dello studio di fattibilità è un suo modulo, da sviluppare.</span></li>
+      <li><time datetime="2026-11-19">19/11</time><span>Il tetto dei 3-4 l'anno vale solo per la direzione del cantiere.</span></li>
+      <li><time datetime="2026-11-19">19/11</time><span>Call gratuita per tutti in questa fase. Si parte con le varianti A e B.</span></li>
+    </ul>
+  </section>
+
+  <footer id="fonti">
+    <p><strong>Fonti Learnn</strong> (tutte richiedono abbonamento Pro). Le idee sono riassunte, non riprodotte.</p>
+    <ol>
+      <li><a href="https://my.learnn.com/player/14138">Trovare cosa vendere e scalare la value ladder</a> — Luca Mastella, Founder &amp; CEO di Learnn</li>
+      <li><a href="https://my.learnn.com/player/14114">Costruire tripwire, bump e self-liquidating offer</a> — Luca Mastella</li>
+      <li><a href="https://my.learnn.com/player/14142">Analizzare un consulting funnel per servizi ad alto valore</a> — Luca Mastella</li>
+      <li><a href="https://my.learnn.com/player/14149">Lanciare un business di servizi ad alto valore</a> — Luca Mastella</li>
+      <li><a href="https://my.learnn.com/player/342">Scegliere la tipologia di pagamento in base al valore percepito nel tempo</a> — Luca Mastella, corso Pricing Strategy</li>
+    </ol>
+    <p>Bozza per uso interno. Fonte di lavoro: <code>lead-generation-marketing/moduli/01-offerta/value-ladder-economia.md</code> e sezione 6 di <code>CLAUDE.md</code>.</p>
+  </footer>
+
+</main>
+</body>
+</html>
